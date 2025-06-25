@@ -1,0 +1,42 @@
+.splash-screen {
+    text-align: center;
+    color: white;
+    font-size: 96px;
+    font-weight: bold;
+    letter-spacing: 5px;
+    opacity: 0;
+    animation: fadeIn 2s ease-in-out forwards;
+}
+
+@keyframes fadeIn {
+    0% {
+        opacity: 0;
+        transform: translateY(50px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeOut {
+    0% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0;
+    }
+}
+
+.fade-out {
+    animation: fadeOut 1s ease-in-out forwards;
+}
+
+@media screen and (max-width: 768px) {
+    .splash-screen {
+        font-size: 48px;
+        letter-spacing: 3px;
+        padding: 20px;
+        line-height: 1.2;
+    }
+}

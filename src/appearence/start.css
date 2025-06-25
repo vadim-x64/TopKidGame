@@ -1,0 +1,66 @@
+.main-menu {
+    width: 100%;
+    height: 100%;
+    display: none;
+    justify-content: center;
+    align-items: center;
+}
+
+.game-button {
+    width: 300px;
+    height: 150px;
+    background-image: url('https://grizly.club/uploads/posts/2023-08/1691656754_grizly-club-p-kartinki-knopka-igrat-bez-fona-47.png');
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+    background-color: transparent;
+    border: none;
+    color: white;
+    font-size: 36px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+}
+
+.game-button:hover {
+    transform: scaleX(1.1);
+}
+
+#backgroundVideo {
+    position: fixed;
+    top: 0;
+    left: 0;
+    min-width: 100%;
+    min-height: 100%;
+    width: auto;
+    height: auto;
+    z-index: -1;
+    object-fit: cover;
+    opacity: 0;
+    transition: opacity 1s ease-in-out;
+}
+
+#backgroundVideo.show {
+    opacity: 1;
+}
+
+@media screen and (max-width: 768px) {
+    .game-button {
+        width: 250px;
+        height: 125px;
+        font-size: 28px;
+    }
+
+    #backgroundVideo {
+        object-fit: cover;
+        object-position: center;
+    }
+
+    .game-button:hover {
+        transform: none;
+    }
+
+    .game-button:focus {
+        transform: scaleX(1.1);
+    }
+}
