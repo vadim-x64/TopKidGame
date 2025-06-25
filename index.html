@@ -4,11 +4,13 @@
   <title>Spots</title>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
-  <link rel="icon" href="https://cdn-icons-png.freepik.com/256/2822/2822855.png?uid=R205499414&ga=GA1.1.1431085202.1736767274&semt=ais_hybrid" type="image/png">
+  <link rel="icon" href="https://cdn-icons-png.flaticon.com/128/17270/17270605.png" type="image/png">
   <link href="https://fonts.googleapis.com/css2?family=Comic+Neue:wght@400;700&display=swap&subset=cyrillic,cyrillic-ext,latin" rel="stylesheet">
   <link rel="stylesheet" href="src/appearence/index.css" />
   <link rel="stylesheet" href="src/appearence/splash.css" />
   <link rel="stylesheet" href="src/appearence/start.css" />
+  <link rel="stylesheet" href="src/appearence/panel.css" />
+  <link rel="stylesheet" href="src/appearence/spots.css" />
 </head>
 <body>
 
@@ -20,16 +22,28 @@
   <source src="src/resources/start.mp3" type="audio/mpeg">
 </audio>
 
+<audio id="gameMusic" loop preload="auto">
+  <source src="src/resources/game.mp3" type="audio/mpeg">
+</audio>
+
 <div class="splash-screen" id="splashScreen">
-  MRCAT PRODUCTION
+  🧩SPOTS GAMING
 </div>
 
 <div class="main-menu" id="mainMenu">
-  <button class="game-button">
+  <button class="game-button" id="newGameButton">
     НОВА ГРА
   </button>
 </div>
 
+<div class="game-panel" id="gamePanel">
+  <button class="back-button" id="backButton">
+    <img src="https://cdn-icons-png.flaticon.com/128/1299/1299944.png" alt="...">
+  </button>
+  <div class="panel-grid" id="panelGrid"></div>
+</div>
+
 <script src="src/scripts/splash.js"></script>
+<script src="src/scripts/panel.js"></script>
 </body>
 </html>

@@ -12,4 +12,4 @@ setTimeout(() => {
     mainMenu.style.display = 'flex';
     backgroundMusic.play();
   }, 1000);
-}, 4000);
+}, 5000);

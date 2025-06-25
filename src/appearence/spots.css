@@ -1,0 +1,65 @@
+.panel-cell {
+    background: linear-gradient(145deg, #ffffff, #e6e6e6);
+    border: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 72px;
+    font-weight: bold;
+    color: #333;
+    cursor: pointer;
+    border-radius: 50%;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s ease;
+}
+
+.panel-cell:not(.empty) {
+    background: linear-gradient(145deg, #FFB347, #FF8C00);
+    border: 10px solid #333;
+    color: #333;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.panel-cell.empty {
+    background: transparent;
+    border: none;
+    cursor: default;
+}
+
+@keyframes smoothAppear {
+    0% {
+        opacity: 0;
+        transform: scale(0.3);
+    }
+
+    50% {
+        opacity: 0.7;
+        transform: scale(1.05);
+    }
+
+    100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+.panel-cell.animate-in {
+    animation: smoothAppear 0.5s ease-out forwards;
+}
+
+.panel-cell:not(.empty) {
+    font-family: 'Comic Neue', cursive;
+    font-weight: 700;
+    text-shadow: 1px 1px 2px rgba(255, 255, 255, 0.5);
+}
+
+@media screen and (max-width: 768px) {
+    .panel-cell {
+        font-size: 36px;
+    }
+
+    .panel-cell:not(.empty) {
+        border: 5px solid #333;
+    }
+}
