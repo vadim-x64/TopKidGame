@@ -4,6 +4,9 @@
     box-sizing: border-box;
     font-family: 'Comic Neue', 'Comic Sans MS', cursive, sans-serif;
     user-select: none;
+    -webkit-font-feature-settings: "kern" 1;
+    font-feature-settings: "kern" 1;
+    text-rendering: optimizeLegibility;
 }
 
 body {
@@ -15,4 +18,7 @@ body {
     overflow: hidden;
     background-color: #000;
     transition: background 1s ease-in-out;
+    -webkit-text-size-adjust: 100%;
+    -moz-text-size-adjust: 100%;
+    text-size-adjust: 100%;
 }
