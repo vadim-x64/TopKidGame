@@ -71,10 +71,9 @@ class GamePanel {
           cell.textContent = '';
         } else {
           cell.textContent = this.grid[i][j];
-          cell.style.opacity = '0'; // Початково невидимі
+          cell.style.opacity = '0';
 
-          // Додаємо анімацію появи з затримкою
-          const delay = (i * 4 + j) * 100; // 100мс затримка між фішками
+          const delay = (i * 4 + j) * 100;
           setTimeout(() => {
             cell.classList.add('animate-in');
           }, delay);
@@ -89,7 +88,6 @@ class GamePanel {
     const mainMenu = document.getElementById('mainMenu');
     const gamePanel = document.getElementById('gamePanel');
 
-    // Зупиняємо фонову музику і включаємо ігрову
     this.backgroundMusic.pause();
     this.gameMusic.currentTime = 0;
     this.gameMusic.play();
@@ -105,7 +103,6 @@ class GamePanel {
       this.renderPanel();
       this.showBackButton();
 
-      // Невелика затримка перед показом панелі
       setTimeout(() => {
         gamePanel.classList.add('show');
       }, 50);
@@ -117,32 +114,37 @@ class GamePanel {
     const gamePanel = document.getElementById('gamePanel');
     const backButton = document.getElementById('backButton');
 
-    gamePanel.classList.remove('show');
-    gamePanel.style.opacity = '0';
-    gamePanel.style.transform = 'scale(0.8)';
+    backButton.style.transition = 'opacity 0.5s ease-in-out, transform 0.5s ease-in-out';
+    backButton.style.opacity = '0';
+    backButton.style.transform = 'scale(0.8)';
 
-    // Зупиняємо ігрову музику і відновлюємо фонову
+    gamePanel.style.transform = 'scale(0.3)';
+    gamePanel.style.opacity = '0';
+
     this.gameMusic.pause();
     this.backgroundMusic.currentTime = 0;
     this.backgroundMusic.play();
 
     setTimeout(() => {
+      backButton.style.display = 'none';
+      backButton.style.opacity = '';
+      backButton.style.transform = '';
+      backButton.style.transition = '';
+
+      gamePanel.classList.remove('show');
       gamePanel.style.display = 'none';
 
-      // Ховаємо кнопку назад
-      const backButton = document.getElementById('backButton');
-      if (backButton) {
-        backButton.style.display = 'none';
-      }
-
-      // Скидаємо інлайн стилі панелі для наступного показу
-      gamePanel.style.opacity = '';
       gamePanel.style.transform = '';
+      gamePanel.style.opacity = '';
 
-      // Повертаємося до головного меню
       mainMenu.style.display = 'flex';
-      mainMenu.style.opacity = '1';
-      mainMenu.style.transform = 'scale(1)';
+      mainMenu.style.opacity = '0';
+      mainMenu.style.transform = 'scale(0.8)';
+
+      setTimeout(() => {
+        mainMenu.style.opacity = '1';
+        mainMenu.style.transform = 'scale(1)';
+      }, 50);
     }, 500);
   }
 
