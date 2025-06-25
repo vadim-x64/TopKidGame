@@ -2,7 +2,7 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: 'Comic Neue', 'Comic Sans MS', cursive, sans-serif;
+    font-family: 'Comic Neue', 'Comfortaa', 'Ubuntu', 'DejaVu Sans', 'Comic Sans MS', 'Trebuchet MS', 'Arial Unicode MS', cursive, sans-serif;
     user-select: none;
     -webkit-font-feature-settings: "kern" 1;
     font-feature-settings: "kern" 1;
@@ -10,7 +10,7 @@
 }
 
 body {
-    font-family: Arial, sans-serif;
+    font-family: 'Comic Neue', 'Comfortaa', 'Ubuntu', 'DejaVu Sans', 'Comic Sans MS', 'Trebuchet MS', 'Arial Unicode MS', cursive, sans-serif;
     height: 100vh;
     display: flex;
     justify-content: center;
