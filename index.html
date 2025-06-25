@@ -18,6 +18,10 @@
   <source src="https://videocdn.cdnpk.net/videos/d234532a-58ef-507e-b378-d128f56c7966/horizontal/previews/clear/large.mp4?token=exp=1750869994~hmac=0f2ecff146e4fd7bd728f10d068ffcd48526ca9d6a41d9ae9b57d5031201ca16" type="video/mp4">
 </video>
 
+<video id="gameBackgroundVideo" autoplay muted loop playsinline>
+  <source src="https://videocdn.cdnpk.net/videos/dbfbe045-08bc-5ae7-a728-2bfd4db44924/horizontal/previews/clear/large.mp4?token=exp=1750881186~hmac=b919cfbf8e901ba293869707faedb246ae073c74623cd400edf8eadbf394a7d9" type="video/mp4">
+</video>
+
 <audio id="backgroundMusic" loop preload="auto">
   <source src="src/resources/start.mp3" type="audio/mpeg">
 </audio>
@@ -25,6 +29,25 @@
 <audio id="gameMusic" loop preload="auto">
   <source src="src/resources/game.mp3" type="audio/mpeg">
 </audio>
+
+<div class="fade-overlay" id="fadeOverlay"></div>
+
+<div class="loading-screen" id="loadingScreen">
+  <div class="loading-content">
+    <div class="loading-spinner"></div>
+    <div class="loading-text">Завантаження...</div>
+  </div>
+</div>
+
+<div class="modal-overlay" id="modalOverlay">
+  <div class="modal">
+    <h3>Повернутися до головного меню?</h3>
+    <div class="modal-buttons">
+      <button class="modal-button cancel" id="cancelButton">Скасувати</button>
+      <button class="modal-button confirm" id="confirmButton">Так, вийти</button>
+    </div>
+  </div>
+</div>
 
 <div class="splash-screen" id="splashScreen">
   🧩SPOTS GAMING
@@ -43,7 +66,10 @@
   <div class="panel-grid" id="panelGrid"></div>
 </div>
 
+
+
 <script src="src/scripts/splash.js"></script>
 <script src="src/scripts/panel.js"></script>
+<script src="src/scripts/index.js"></script>
 </body>
 </html>

@@ -10,6 +10,6 @@ setTimeout(() => {
     splashScreen.style.display = 'none';
     backgroundVideo.classList.add('show');
     mainMenu.style.display = 'flex';
-    backgroundMusic.play();
+    backgroundMusic.play().catch(() => {});
   }, 1000);
-}, 5000);
+}, 0);
