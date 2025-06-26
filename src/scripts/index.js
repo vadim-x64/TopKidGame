@@ -42,14 +42,13 @@ class ClickSoundManager {
     const tagName = element.tagName.toLowerCase();
     const hasButtonClass = element.classList.contains('game-button') ||
       element.classList.contains('back-button') ||
-      element.classList.contains('modal-button') ||
-      element.classList.contains('panel-cell');
+      element.classList.contains('modal-button');
 
     return tagName === 'button' || hasButtonClass || element.getAttribute('role') === 'button';
   }
 
   getButtonSelectors() {
-    return 'button, .game-button, .back-button, .modal-button, .panel-cell:not(.empty), [role="button"]';
+    return 'button, .game-button, .back-button, .modal-button, [role="button"]';
   }
 
   playClickSound() {
