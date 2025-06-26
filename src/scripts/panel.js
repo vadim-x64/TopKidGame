@@ -93,21 +93,21 @@ class GamePanel {
         cell.className = 'panel-cell';
         cell.setAttribute('data-row', i);
         cell.setAttribute('data-col', j);
+        cell.style.opacity = '0';
 
         if (this.grid[i][j] === 0) {
           cell.classList.add('empty');
           cell.textContent = '';
         } else {
           cell.textContent = this.grid[i][j];
-          cell.style.opacity = '0';
-
-          const delay = (i * 4 + j) * 100;
-          setTimeout(() => {
-            cell.classList.add('animate-in');
-          }, delay);
         }
 
         panelGrid.appendChild(cell);
+
+        const delay = (i * 4 + j) * 100;
+        setTimeout(() => {
+          cell.classList.add('animate-in');
+        }, delay);
       }
     }
 
@@ -148,7 +148,6 @@ class GamePanel {
 
           setTimeout(() => {
             gamePanel.classList.add('show');
-            // Прибираємо чорне вицвітання
             this.fadeOverlay.classList.remove('active');
           }, 50);
         }, 500);
@@ -164,7 +163,6 @@ class GamePanel {
     this.loadingScreen.style.display = 'flex';
 
     setTimeout(() => {
-      // Чорне вицвітання
       this.fadeOverlay.classList.add('active');
 
       setTimeout(() => {
