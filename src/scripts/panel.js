@@ -110,6 +110,12 @@ class GamePanel {
         panelGrid.appendChild(cell);
       }
     }
+
+    setTimeout(() => {
+      if (window.gameMechanics) {
+        window.gameMechanics.initializeMechanics();
+      }
+    }, 2000);
   }
 
   showPanel() {
