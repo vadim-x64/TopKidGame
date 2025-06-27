@@ -1,5 +1,6 @@
 .splash-screen {
     display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
     color: #000;
@@ -33,16 +34,17 @@
 .splash-logo {
     width: 250px;
     height: auto;
-    animation: logoAnimation 1s cubic-bezier(0.45, 0.05, 0.55, 0.95) forwards;
+    animation: logoAnimation 1s cubic-bezier(0.45, 0.05, 0.55, 0.95) 2s forwards;
     transform-origin: center center;
     -webkit-user-drag: none;
     pointer-events: none;
+    opacity: 0;
 }
 
 @keyframes logoAnimation {
     0% {
         transform: translateY(0) rotateZ(0deg) scale(1);
-        opacity: 1;
+        opacity: 0;
     }
     50% {
         transform: translateY(-70px) rotateZ(180deg) scale(1.1);
@@ -88,14 +90,10 @@
 
 @media screen and (max-width: 768px) {
     .main-text {
-        font-size: 60px;
+        font-size: 72px;
     }
 
     .outline-text {
-        font-size: 32px;
-    }
-
-    .splash-logo {
-        width: 120px;
+        font-size: 40px;
     }
 }
