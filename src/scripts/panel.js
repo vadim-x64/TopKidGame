@@ -77,7 +77,7 @@ class GamePanel {
         window.gameTimer.startTimer();
       }
     }
-    this.shuffleGrid();
+    // this.shuffleGrid();
     this.renderPanel();
   }
 
@@ -163,7 +163,7 @@ class GamePanel {
           gamePanel.style.display = 'flex';
           this.loadingScreen.style.display = 'none';
 
-          this.shuffleGrid();
+          // this.shuffleGrid();
           this.renderPanel();
           this.showBackButton();
 
