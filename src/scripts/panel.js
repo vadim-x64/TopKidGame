@@ -69,6 +69,9 @@ class GamePanel {
   }
 
   shuffleAndRender() {
+    if (window.victoryHandler) {
+      window.victoryHandler.resetVictoryState();
+    }
     this.shuffleGrid();
     this.renderPanel();
   }

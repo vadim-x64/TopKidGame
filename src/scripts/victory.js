@@ -4,6 +4,7 @@ class VictoryHandler {
     this.victoryOverlay = null;
     this.victoryImages = null;
     this.isVictoryPlaying = false;
+    this.gameWon = false;
     this.initializeVictoryElements();
   }
 
@@ -35,6 +36,20 @@ class VictoryHandler {
     if (this.isVictoryPlaying) return;
 
     this.isVictoryPlaying = true;
+    this.gameWon = true;
+
+    const backButton = document.getElementById('backButton');
+    const shuffleButton = document.getElementById('shuffleButton');
+    if (backButton) {
+      backButton.disabled = true;
+      backButton.style.opacity = '0.5';
+      backButton.style.pointerEvents = 'none';
+    }
+    if (shuffleButton) {
+      shuffleButton.disabled = true;
+      shuffleButton.style.opacity = '0.5';
+      shuffleButton.style.pointerEvents = 'none';
+    }
 
     if (window.gameMechanics) {
       window.gameMechanics.setVictoryState(true);
@@ -67,24 +82,45 @@ class VictoryHandler {
     this.victoryImages.classList.add('hide');
 
     setTimeout(() => {
-      const gameMusic = document.getElementById('gameMusic');
-      if (gameMusic && gameMusic.paused) {
-        gameMusic.play().catch(error => {
-          console.log('Game music could not be resumed:', error);
-        });
-      }
-
       this.victoryImages.classList.remove('hide');
       this.isVictoryPlaying = false;
 
-      if (window.gameMechanics) {
-        window.gameMechanics.setVictoryState(false);
+      const backButton = document.getElementById('backButton');
+      const shuffleButton = document.getElementById('shuffleButton');
+      if (backButton) {
+        backButton.disabled = false;
+        backButton.style.opacity = '';
+        backButton.style.pointerEvents = '';
       }
+      if (shuffleButton) {
+        shuffleButton.disabled = false;
+        shuffleButton.style.opacity = '';
+        shuffleButton.style.pointerEvents = '';
+      }
+
     }, 1000);
   }
 
   triggerVictory() {
     this.showVictory();
+  }
+
+  resetVictoryState() {
+    this.gameWon = false;
+    if (window.gameMechanics) {
+      window.gameMechanics.setVictoryState(false);
+    }
+
+    const gameMusic = document.getElementById('gameMusic');
+    if (gameMusic && gameMusic.paused) {
+      gameMusic.play().catch(error => {
+        console.log('Game music could not be resumed:', error);
+      });
+    }
+  }
+
+  isGameWon() {
+    return this.gameWon;
   }
 }
 

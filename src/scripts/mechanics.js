@@ -8,6 +8,7 @@ class GameMechanics {
     this.originalPosition = null;
     this.dragThreshold = 5;
     this.isVictoryPlaying = false;
+    this.transitionSound = new Audio('src/resources/transition.mp3');
     this.bindEvents();
   }
 
@@ -17,7 +18,6 @@ class GameMechanics {
     });
   }
 
-  // Додано метод для встановлення стану перемоги
   setVictoryState(isPlaying) {
     this.isVictoryPlaying = isPlaying;
     if (isPlaying && this.isDragging) {
@@ -45,7 +45,7 @@ class GameMechanics {
   }
 
   handleTouchStart(e) {
-    if (this.isVictoryPlaying) return;
+    if (this.isVictoryPlaying || (window.victoryHandler && window.victoryHandler.isGameWon())) return;
 
     const touch = e.touches[0];
     const cell = e.target.closest('.panel-cell');
@@ -58,7 +58,7 @@ class GameMechanics {
   }
 
   handleTouchMove(e) {
-    if (this.isVictoryPlaying || !this.touchStarted) return;
+    if (this.isVictoryPlaying || !this.touchStarted || (window.victoryHandler && window.victoryHandler.isGameWon())) return;
 
     const touch = e.touches[0];
     const deltaX = Math.abs(touch.clientX - this.startPosition.x);
@@ -75,7 +75,7 @@ class GameMechanics {
   }
 
   handleTouchEnd(e) {
-    if (this.isVictoryPlaying) return;
+    if (this.isVictoryPlaying || (window.victoryHandler && window.victoryHandler.isGameWon())) return;
 
     e.preventDefault();
 
@@ -87,7 +87,7 @@ class GameMechanics {
   }
 
   handleMouseDown(e) {
-    if (this.isVictoryPlaying || this.touchStarted) return;
+    if (this.isVictoryPlaying || this.touchStarted || (window.victoryHandler && window.victoryHandler.isGameWon())) return;
 
     const cell = e.target.closest('.panel-cell');
     if (cell && !cell.classList.contains('empty')) {
@@ -97,7 +97,7 @@ class GameMechanics {
   }
 
   handleMouseMove(e) {
-    if (this.isVictoryPlaying || this.touchStarted) return;
+    if (this.isVictoryPlaying || this.touchStarted || (window.victoryHandler && window.victoryHandler.isGameWon())) return;
 
     if (!this.isDragging && this.currentDragCell) {
       const deltaX = Math.abs(e.clientX - this.startPosition.x);
@@ -114,7 +114,7 @@ class GameMechanics {
   }
 
   handleMouseEnd(e) {
-    if (this.isVictoryPlaying || this.touchStarted) return;
+    if (this.isVictoryPlaying || this.touchStarted || (window.victoryHandler && window.victoryHandler.isGameWon())) return;
 
     if (this.isDragging) {
       this.endDrag();
@@ -317,6 +317,9 @@ class GameMechanics {
     gamePanel.grid[fromRow][fromCol] = 0;
     gamePanel.grid[toRow][toCol] = value;
     gamePanel.emptyPosition = { row: fromRow, col: fromCol };
+
+    this.transitionSound.currentTime = 0;
+    this.transitionSound.play().catch(() => {});
 
     this.updateDOM(fromRow, fromCol, toRow, toCol, value);
 
