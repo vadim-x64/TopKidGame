@@ -7,6 +7,7 @@ class GameMechanics {
     this.floatingCell = null;
     this.originalPosition = null;
     this.dragThreshold = 5;
+    this.isVictoryPlaying = false;
     this.bindEvents();
   }
 
@@ -14,6 +15,14 @@ class GameMechanics {
     document.addEventListener('DOMContentLoaded', () => {
       this.initializeMechanics();
     });
+  }
+
+  // Додано метод для встановлення стану перемоги
+  setVictoryState(isPlaying) {
+    this.isVictoryPlaying = isPlaying;
+    if (isPlaying && this.isDragging) {
+      this.cleanup();
+    }
   }
 
   initializeMechanics() {
@@ -36,6 +45,8 @@ class GameMechanics {
   }
 
   handleTouchStart(e) {
+    if (this.isVictoryPlaying) return;
+
     const touch = e.touches[0];
     const cell = e.target.closest('.panel-cell');
 
@@ -47,7 +58,7 @@ class GameMechanics {
   }
 
   handleTouchMove(e) {
-    if (!this.touchStarted) return;
+    if (this.isVictoryPlaying || !this.touchStarted) return;
 
     const touch = e.touches[0];
     const deltaX = Math.abs(touch.clientX - this.startPosition.x);
@@ -64,6 +75,8 @@ class GameMechanics {
   }
 
   handleTouchEnd(e) {
+    if (this.isVictoryPlaying) return;
+
     e.preventDefault();
 
     if (this.isDragging) {
@@ -74,7 +87,7 @@ class GameMechanics {
   }
 
   handleMouseDown(e) {
-    if (this.touchStarted) return;
+    if (this.isVictoryPlaying || this.touchStarted) return;
 
     const cell = e.target.closest('.panel-cell');
     if (cell && !cell.classList.contains('empty')) {
@@ -84,7 +97,7 @@ class GameMechanics {
   }
 
   handleMouseMove(e) {
-    if (this.touchStarted) return;
+    if (this.isVictoryPlaying || this.touchStarted) return;
 
     if (!this.isDragging && this.currentDragCell) {
       const deltaX = Math.abs(e.clientX - this.startPosition.x);
@@ -101,7 +114,7 @@ class GameMechanics {
   }
 
   handleMouseEnd(e) {
-    if (this.touchStarted) return;
+    if (this.isVictoryPlaying || this.touchStarted) return;
 
     if (this.isDragging) {
       this.endDrag();
@@ -309,7 +322,9 @@ class GameMechanics {
 
     setTimeout(() => {
       if (this.checkWin()) {
-        alert('Вітаємо! Ви виграли! 🎉');
+        if (window.victoryHandler) {
+          window.victoryHandler.triggerVictory();
+        }
       }
     }, 100);
   }

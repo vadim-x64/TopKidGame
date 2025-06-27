@@ -103,6 +103,31 @@
     pointer-events: none;
 }
 
+.shuffle-button {
+    width: 70px;
+    height: 70px;
+    cursor: pointer;
+    background-color: transparent;
+    transition: transform 0.2s ease;
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    z-index: 999;
+    display: none;
+    border: none;
+}
+
+.shuffle-button:hover {
+    transform: rotate(180deg) scaleX(1.2);
+}
+
+.shuffle-button img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    pointer-events: none;
+}
+
 .game-panel {
     display: none;
     justify-content: center;
@@ -144,17 +169,21 @@
         padding: 10px;
     }
 
-    .back-button {
+    .back-button, .shuffle-button {
         width: 50px;
         height: 50px;
     }
 
-    .back-button:hover {
+    .back-button:hover, .shuffle-button:hover {
         transform: none;
     }
 
     .back-button:focus {
         transform: scaleX(1.1);
+    }
+
+    .shuffle-button:focus {
+        transform: rotate(180deg) scaleX(1.2);
     }
 
     .modal {

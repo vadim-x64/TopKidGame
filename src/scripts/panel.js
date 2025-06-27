@@ -54,10 +54,23 @@ class GamePanel {
 
   showBackButton() {
     const backButton = document.getElementById('backButton');
+    const shuffleButton = document.getElementById('shuffleButton');
+
     backButton.style.display = 'block';
+    shuffleButton.style.display = 'block';
+
     backButton.addEventListener('click', () => {
       this.showConfirmModal();
     });
+
+    shuffleButton.addEventListener('click', () => {
+      this.shuffleAndRender();
+    });
+  }
+
+  shuffleAndRender() {
+    this.shuffleGrid();
+    this.renderPanel();
   }
 
   showConfirmModal() {
@@ -142,7 +155,7 @@ class GamePanel {
           gamePanel.style.display = 'flex';
           this.loadingScreen.style.display = 'none';
 
-          this.shuffleGrid();
+          // this.shuffleGrid();
           this.renderPanel();
           this.showBackButton();
 
@@ -159,6 +172,7 @@ class GamePanel {
     const mainMenu = document.getElementById('mainMenu');
     const gamePanel = document.getElementById('gamePanel');
     const backButton = document.getElementById('backButton');
+    const shuffleButton = document.getElementById('shuffleButton');
 
     this.loadingScreen.style.display = 'flex';
 
@@ -177,6 +191,10 @@ class GamePanel {
         backButton.style.opacity = '0';
         backButton.style.transform = 'scale(0.8)';
 
+        shuffleButton.style.transition = 'opacity 0.5s ease-in-out, transform 0.5s ease-in-out';
+        shuffleButton.style.opacity = '0';
+        shuffleButton.style.transform = 'scale(0.8)';
+
         gamePanel.style.transform = 'scale(0.3)';
         gamePanel.style.opacity = '0';
 
@@ -185,6 +203,11 @@ class GamePanel {
           backButton.style.opacity = '';
           backButton.style.transform = '';
           backButton.style.transition = '';
+
+          shuffleButton.style.display = 'none';
+          shuffleButton.style.opacity = '';
+          shuffleButton.style.transform = '';
+          shuffleButton.style.transition = '';
 
           gamePanel.classList.remove('show');
           gamePanel.style.display = 'none';
