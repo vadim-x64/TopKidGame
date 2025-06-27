@@ -116,7 +116,7 @@
 }
 
 .shuffle-button:hover {
-    transform: rotate(180deg) scaleX(1.2);
+    transform: rotate(-180deg) scaleX(1.1);
 }
 
 .shuffle-button img {

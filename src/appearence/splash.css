@@ -1,11 +1,65 @@
 .splash-screen {
-    text-align: center;
-    color: white;
-    font-size: 132px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #000;
     font-weight: bold;
     letter-spacing: 5px;
     opacity: 0;
     animation: fadeIn 2s ease-in-out forwards;
+    min-height: 100vh;
+    background-color: #FFF;
+    line-height: 1;
+}
+
+.splash-text {
+    display: flex;
+    flex-direction: column;
+}
+
+.main-text {
+    font-size: 160px;
+}
+
+.outline-text {
+    color: transparent;
+    -webkit-text-stroke: 1px #000;
+    text-stroke: 1px #000;
+    font-size: 60px;
+    font-weight: normal;
+    letter-spacing: 0;
+}
+
+.splash-logo {
+    width: 250px;
+    height: auto;
+    animation: logoAnimation 1s cubic-bezier(0.45, 0.05, 0.55, 0.95) forwards;
+    transform-origin: center center;
+    -webkit-user-drag: none;
+    pointer-events: none;
+}
+
+@keyframes logoAnimation {
+    0% {
+        transform: translateY(0) rotateZ(0deg) scale(1);
+        opacity: 1;
+    }
+    50% {
+        transform: translateY(-70px) rotateZ(180deg) scale(1.1);
+        opacity: 1;
+    }
+    75% {
+        transform: translateY(10px) rotateZ(360deg) scale(1.05);
+        opacity: 1;
+    }
+    90% {
+        transform: translateY(-5px) rotateZ(360deg) scale(1.02);
+        opacity: 1;
+    }
+    100% {
+        transform: translateY(0) rotateZ(360deg) scale(1);
+        opacity: 1;
+    }
 }
 
 @keyframes fadeIn {
@@ -33,10 +87,15 @@
 }
 
 @media screen and (max-width: 768px) {
-    .splash-screen {
+    .main-text {
         font-size: 60px;
-        letter-spacing: 3px;
-        padding: 20px;
-        line-height: 1.2;
+    }
+
+    .outline-text {
+        font-size: 32px;
+    }
+
+    .splash-logo {
+        width: 120px;
     }
 }
