@@ -1,0 +1,55 @@
+.timer-container {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    width: 200px;
+    backdrop-filter: blur(10px);
+    padding: 5px 10px;
+    border-radius: 200px;
+    border: none;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    z-index: 998;
+    display: none;
+    align-items: center;
+    gap: 10px;
+    transition: all 0.3s ease;
+}
+
+.timer-container.show {
+    display: flex;
+}
+
+.timer-text {
+    font-size: 32px;
+    font-weight: bold;
+    color: #26BF31;
+    transition: all 0.3s ease;
+    text-align: center;
+    margin: auto;
+}
+
+.timer-text.warning {
+    color: #E80808;
+    animation: pulse 1s ease-in-out infinite;
+}
+
+@keyframes pulse {
+    0%, 100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+    50% {
+        transform: scale(1.1);
+        opacity: 0.8;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .timer-container {
+        width: 100px;
+    }
+
+    .timer-text {
+        font-size: 28px;
+    }
+}

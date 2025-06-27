@@ -71,6 +71,11 @@ class GamePanel {
   shuffleAndRender() {
     if (window.victoryHandler) {
       window.victoryHandler.resetVictoryState();
+
+      if (window.gameTimer) {
+        window.gameTimer.resetTimer();
+        window.gameTimer.startTimer();
+      }
     }
     this.shuffleGrid();
     this.renderPanel();
@@ -162,6 +167,10 @@ class GamePanel {
           this.renderPanel();
           this.showBackButton();
 
+          if (window.gameTimer) {
+            window.gameTimer.startTimer();
+          }
+
           setTimeout(() => {
             gamePanel.classList.add('show');
             this.fadeOverlay.classList.remove('active');
@@ -187,6 +196,12 @@ class GamePanel {
         this.backgroundVideo.classList.add('show');
 
         this.gameMusic.pause();
+
+        if (window.gameTimer) {
+          window.gameTimer.stopTimer();
+          window.gameTimer.hideTimer();
+        }
+
         this.backgroundMusic.currentTime = 0;
         this.backgroundMusic.play().catch(() => {});
 

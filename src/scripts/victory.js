@@ -36,6 +36,20 @@ class VictoryHandler {
     if (this.isVictoryPlaying) return;
 
     this.isVictoryPlaying = true;
+
+    if (window.gameTimer) {
+      window.gameTimer.stopTimer();
+
+      if (window.gameTimer.warningSound) {
+        window.gameTimer.warningSound.pause();
+        window.gameTimer.warningSound.currentTime = 0;
+      }
+
+      if (window.gameTimer.timerText.classList.contains('warning')) {
+        window.gameTimer.timerText.style.animation = 'none';
+      }
+    }
+
     this.gameWon = true;
 
     const backButton = document.getElementById('backButton');
@@ -116,6 +130,10 @@ class VictoryHandler {
       gameMusic.play().catch(error => {
         console.log('Game music could not be resumed:', error);
       });
+
+      if (window.gameTimer) {
+        window.gameTimer.resetTimer();
+      }
     }
   }
 
