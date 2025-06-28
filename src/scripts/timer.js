@@ -14,6 +14,7 @@ class GameTimer {
     this.defeatImages = null;
     this.isDefeatShowing = false;
     this.isWarningPlaying = false;
+    this.warningStartTime = null;
     this.initializeTimer();
     this.initializeDefeatElements();
   }
@@ -34,6 +35,10 @@ class GameTimer {
     this.warningSound.src = 'src/resources/timer.mp3';
     this.warningSound.preload = 'auto';
     document.body.appendChild(this.warningSound);
+
+    this.warningSound.addEventListener('ended', () => {
+      this.isWarningPlaying = false;
+    });
 
     this.defeatSound = document.createElement('audio');
     this.defeatSound.src = 'src/resources/defeat.mp3';
@@ -70,6 +75,8 @@ class GameTimer {
     this.isRunning = true;
     this.timeLeft = this.totalTime;
     this.warningPlayed = false;
+    this.warningStartTime = null;
+    this.isWarningPlaying = false;
     this.timerContainer.classList.add('show');
     this.timerContainer.classList.remove('warning');
     this.timerText.classList.remove('warning');
@@ -101,6 +108,7 @@ class GameTimer {
       this.warningSound.pause();
       this.warningSound.currentTime = 0;
       this.isWarningPlaying = false;
+      this.warningStartTime = null;
     }
   }
 
@@ -112,7 +120,7 @@ class GameTimer {
 
     this.isPaused = true;
 
-    if (this.warningSound && this.isWarningPlaying) {
+    if (this.warningSound && this.isWarningPlaying && !this.warningSound.paused) {
       this.warningSound.pause();
     }
 
@@ -126,7 +134,7 @@ class GameTimer {
 
     this.isPaused = false;
 
-    if (this.timeLeft < 30 && this.warningPlayed && this.isWarningPlaying) {
+    if (this.timeLeft < 30 && this.warningPlayed && this.isWarningPlaying && this.warningSound.paused) {
       this.warningSound.play().catch(() => {});
     }
 
@@ -153,6 +161,7 @@ class GameTimer {
     this.stopTimer();
     this.timeLeft = this.totalTime;
     this.warningPlayed = false;
+    this.warningStartTime = null;
     this.timerContainer.classList.remove('warning');
     this.timerText.classList.remove('warning');
     this.timerContainer.classList.add('show');
@@ -161,6 +170,7 @@ class GameTimer {
     if (this.warningSound) {
       this.warningSound.pause();
       this.warningSound.currentTime = 0;
+      this.isWarningPlaying = false;
     }
 
     if (this.isDefeatShowing) {
@@ -174,6 +184,7 @@ class GameTimer {
 
   playWarning() {
     this.isWarningPlaying = true;
+    this.warningStartTime = Date.now();
     this.warningSound.currentTime = 0;
     this.warningSound.play().catch(() => {});
     this.timerContainer.classList.add('warning');
@@ -190,6 +201,7 @@ class GameTimer {
     if (this.warningSound) {
       this.warningSound.pause();
       this.warningSound.currentTime = 0;
+      this.isWarningPlaying = false;
     }
 
     if (this.isDefeatShowing) return;
