@@ -1,7 +1,7 @@
 class GameTimer {
   constructor() {
-    this.timeLeft = 10;
-    this.totalTime = 10;
+    this.timeLeft = 300;
+    this.totalTime = 300;
     this.timerInterval = null;
     this.isRunning = false;
     this.isPaused = false;
