@@ -77,6 +77,11 @@ class GamePanel {
         window.gameTimer.startTimer();
       }
     }
+
+    if (window.gamePause) {
+      window.gamePause.enablePauseButton();
+    }
+
     this.shuffleGrid();
     this.renderPanel();
   }

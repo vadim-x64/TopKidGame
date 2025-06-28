@@ -24,8 +24,8 @@ class VictoryHandler {
     this.victoryImages.id = 'victoryImages';
 
     const firstImage = document.createElement('img');
-    firstImage.src = 'src/resources/victory.gif'; // Замініть на своє посилання
-    firstImage.alt = 'Victory Image 1';
+    firstImage.src = 'src/resources/victory.gif';
+    firstImage.alt = '...';
     firstImage.className = 'victory-image first-image';
 
     this.victoryImages.appendChild(firstImage);
@@ -63,6 +63,10 @@ class VictoryHandler {
       shuffleButton.disabled = true;
       shuffleButton.style.opacity = '0.5';
       shuffleButton.style.pointerEvents = 'none';
+    }
+
+    if (window.gamePause) {
+      window.gamePause.disablePauseButton();
     }
 
     if (window.gameMechanics) {
@@ -111,7 +115,6 @@ class VictoryHandler {
         shuffleButton.style.opacity = '';
         shuffleButton.style.pointerEvents = '';
       }
-
     }, 1000);
   }
 
@@ -134,6 +137,10 @@ class VictoryHandler {
       if (window.gameTimer) {
         window.gameTimer.resetTimer();
       }
+    }
+
+    if (window.gamePause) {
+      window.gamePause.enablePauseButton();
     }
   }
 

@@ -1,9 +1,10 @@
 class GameTimer {
   constructor() {
-    this.timeLeft = 300;
-    this.totalTime = 300;
+    this.timeLeft = 10;
+    this.totalTime = 10;
     this.timerInterval = null;
     this.isRunning = false;
+    this.isPaused = false;
     this.warningPlayed = false;
     this.timerContainer = null;
     this.timerText = null;
@@ -12,7 +13,7 @@ class GameTimer {
     this.defeatOverlay = null;
     this.defeatImages = null;
     this.isDefeatShowing = false;
-
+    this.isWarningPlaying = false;
     this.initializeTimer();
     this.initializeDefeatElements();
   }
@@ -21,11 +22,9 @@ class GameTimer {
     this.timerContainer = document.createElement('div');
     this.timerContainer.className = 'timer-container';
     this.timerContainer.id = 'timerContainer';
-
     this.timerText = document.createElement('div');
     this.timerText.className = 'timer-text';
     this.timerText.textContent = this.formatTime(this.timeLeft);
-
     this.timerContainer.appendChild(this.timerText);
     document.body.appendChild(this.timerContainer);
   }
@@ -52,7 +51,7 @@ class GameTimer {
 
     const defeatImage = document.createElement('img');
     defeatImage.src = 'src/resources/defeat.gif';
-    defeatImage.alt = 'Defeat Image';
+    defeatImage.alt = '...';
     defeatImage.className = 'victory-image';
 
     this.defeatImages.appendChild(defeatImage);
@@ -95,7 +94,59 @@ class GameTimer {
       clearInterval(this.timerInterval);
       this.timerInterval = null;
     }
+
     this.isRunning = false;
+
+    if (this.warningSound && this.isWarningPlaying) {
+      this.warningSound.pause();
+      this.warningSound.currentTime = 0;
+      this.isWarningPlaying = false;
+    }
+  }
+
+  pauseTimer() {
+    if (this.timerInterval) {
+      clearInterval(this.timerInterval);
+      this.timerInterval = null;
+    }
+
+    this.isPaused = true;
+
+    if (this.warningSound && this.isWarningPlaying) {
+      this.warningSound.pause();
+    }
+
+    if (this.timerText.classList.contains('warning')) {
+      this.timerText.style.animationPlayState = 'paused';
+    }
+  }
+
+  resumeTimer() {
+    if (!this.isRunning || !this.isPaused) return;
+
+    this.isPaused = false;
+
+    if (this.timeLeft < 30 && this.warningPlayed && this.isWarningPlaying) {
+      this.warningSound.play().catch(() => {});
+    }
+
+    if (this.timerText.classList.contains('warning')) {
+      this.timerText.style.animationPlayState = 'running';
+    }
+
+    this.timerInterval = setInterval(() => {
+      this.timeLeft--;
+      this.timerText.textContent = this.formatTime(this.timeLeft);
+
+      if (this.timeLeft < 30 && !this.warningPlayed) {
+        this.warningPlayed = true;
+        this.playWarning();
+      }
+
+      if (this.timeLeft <= 0) {
+        this.triggerDefeat();
+      }
+    }, 1000);
   }
 
   resetTimer() {
@@ -122,6 +173,7 @@ class GameTimer {
   }
 
   playWarning() {
+    this.isWarningPlaying = true;
     this.warningSound.currentTime = 0;
     this.warningSound.play().catch(() => {});
     this.timerContainer.classList.add('warning');
@@ -154,6 +206,10 @@ class GameTimer {
       shuffleButton.disabled = true;
       shuffleButton.style.opacity = '0.5';
       shuffleButton.style.pointerEvents = 'none';
+    }
+
+    if (window.gamePause) {
+      window.gamePause.disablePauseButton();
     }
 
     if (window.gameMechanics) {
@@ -208,6 +264,14 @@ class GameTimer {
 
   getTimeLeft() {
     return this.timeLeft;
+  }
+
+  isTimerPaused() {
+    return this.isPaused;
+  }
+
+  isWarningActive() {
+    return this.isWarningPlaying;
   }
 }
 
