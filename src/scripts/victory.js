@@ -24,7 +24,7 @@ class VictoryHandler {
     this.victoryImages.id = 'victoryImages';
 
     const firstImage = document.createElement('img');
-    firstImage.src = 'src/resources/victory.gif';
+    firstImage.src = 'src/resources/victory.png';
     firstImage.alt = '...';
     firstImage.className = 'victory-image first-image';
 

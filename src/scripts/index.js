@@ -13,7 +13,7 @@ class ClickSoundManager {
 
   addClickHandlers() {
     document.addEventListener('click', (event) => {
-      if (this.isButton(event.target)) {
+      if (this.isButton(event.target) && !this.isPauseButton(event.target)) {
         this.playClickSound();
       }
     });
@@ -45,6 +45,12 @@ class ClickSoundManager {
       element.classList.contains('modal-button');
 
     return tagName === 'button' || hasButtonClass || element.getAttribute('role') === 'button';
+  }
+
+  isPauseButton(element) {
+    return element && (element.id === 'pauseButton' || element.classList.contains('pause-button') ||
+      (element.parentElement && (element.parentElement.id === 'pauseButton' ||
+        element.parentElement.classList.contains('pause-button'))));
   }
 
   getButtonSelectors() {

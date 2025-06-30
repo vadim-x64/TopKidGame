@@ -55,7 +55,7 @@ class GameTimer {
     this.defeatImages.id = 'defeatImages';
 
     const defeatImage = document.createElement('img');
-    defeatImage.src = 'src/resources/defeat.gif';
+    defeatImage.src = 'src/resources/defeat.png';
     defeatImage.alt = '...';
     defeatImage.className = 'victory-image';
 

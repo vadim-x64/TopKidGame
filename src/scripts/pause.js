@@ -24,7 +24,7 @@ class GamePause {
 
     const img = document.createElement('img');
     img.src = this.pauseIcon;
-    img.alt = 'Pause';
+    img.alt = '...';
 
     this.pauseButton.appendChild(img);
     document.body.appendChild(this.pauseButton);
@@ -109,7 +109,7 @@ class GamePause {
     const img = this.pauseButton.querySelector('img');
     if (img) {
       img.src = this.playIcon;
-      img.alt = 'Play';
+      img.alt = '...';
     }
 
     const gameMusic = document.getElementById('gameMusic');
@@ -155,7 +155,7 @@ class GamePause {
     const img = this.pauseButton.querySelector('img');
     if (img) {
       img.src = this.pauseIcon;
-      img.alt = 'Pause';
+      img.alt = '...';
     }
 
     const gameMusic = document.getElementById('gameMusic');
@@ -206,7 +206,7 @@ class GamePause {
       const img = this.pauseButton.querySelector('img');
       if (img) {
         img.src = this.pauseIcon;
-        img.alt = 'Pause';
+        img.alt = '...';
       }
 
       this.pauseOverlay.classList.remove('show');
