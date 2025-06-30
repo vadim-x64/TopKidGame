@@ -9,6 +9,8 @@ class GamePanel {
     this.modalOverlay = document.getElementById('modalOverlay');
     this.backgroundVideo = document.getElementById('backgroundVideo');
     this.gameBackgroundVideo = document.getElementById('gameBackgroundVideo');
+    this.animationTimeouts = [];
+    this.isInitializing = false;
     this.initializeGrid();
     this.bindEvents();
   }
@@ -49,6 +51,52 @@ class GamePanel {
           index++;
         }
       }
+    }
+  }
+
+  clearAnimationTimeouts() {
+    this.animationTimeouts.forEach(timeoutId => {
+      clearTimeout(timeoutId);
+    });
+    this.animationTimeouts = [];
+  }
+
+  pauseInitialization() {
+    if (this.isInitializing) {
+      this.clearAnimationTimeouts();
+
+      const panelGrid = document.getElementById('panelGrid');
+      const cells = panelGrid.querySelectorAll('.panel-cell:not(.animate-in)');
+
+      this.pendingCells = Array.from(cells).map(cell => ({
+        element: cell,
+        row: parseInt(cell.getAttribute('data-row')),
+        col: parseInt(cell.getAttribute('data-col'))
+      }));
+    }
+  }
+
+  resumeInitialization() {
+    if (this.isInitializing && this.pendingCells && this.pendingCells.length > 0) {
+      this.pendingCells.forEach((cellData, index) => {
+        const delay = index * 100;
+        const timeoutId = setTimeout(() => {
+          if (!window.gamePause || !window.gamePause.getIsPaused()) {
+            cellData.element.classList.add('animate-in');
+          }
+        }, delay);
+        this.animationTimeouts.push(timeoutId);
+      });
+
+      this.pendingCells = [];
+
+      const finalTimeoutId = setTimeout(() => {
+        if (window.gameMechanics && (!window.gamePause || !window.gamePause.getIsPaused())) {
+          window.gameMechanics.initializeMechanics();
+        }
+        this.isInitializing = false;
+      }, this.pendingCells.length * 100 + 500);
+      this.animationTimeouts.push(finalTimeoutId);
     }
   }
 
@@ -110,6 +158,9 @@ class GamePanel {
   }
 
   renderPanel() {
+    this.clearAnimationTimeouts();
+    this.isInitializing = true;
+
     const panelGrid = document.getElementById('panelGrid');
     panelGrid.innerHTML = '';
 
@@ -131,17 +182,22 @@ class GamePanel {
         panelGrid.appendChild(cell);
 
         const delay = (i * 4 + j) * 100;
-        setTimeout(() => {
-          cell.classList.add('animate-in');
+        const timeoutId = setTimeout(() => {
+          if (!window.gamePause || !window.gamePause.getIsPaused()) {
+            cell.classList.add('animate-in');
+          }
         }, delay);
+        this.animationTimeouts.push(timeoutId);
       }
     }
 
-    setTimeout(() => {
-      if (window.gameMechanics) {
+    const finalTimeoutId = setTimeout(() => {
+      if (window.gameMechanics && (!window.gamePause || !window.gamePause.getIsPaused())) {
         window.gameMechanics.initializeMechanics();
       }
+      this.isInitializing = false;
     }, 2000);
+    this.animationTimeouts.push(finalTimeoutId);
   }
 
   showPanel() {
@@ -186,6 +242,9 @@ class GamePanel {
   }
 
   hidePanel() {
+    this.clearAnimationTimeouts();
+    this.isInitializing = false;
+
     const mainMenu = document.getElementById('mainMenu');
     const gamePanel = document.getElementById('gamePanel');
     const backButton = document.getElementById('backButton');
@@ -271,4 +330,4 @@ class GamePanel {
   }
 }
 
-const gamePanel = new GamePanel();
+window.gamePanel = new GamePanel();

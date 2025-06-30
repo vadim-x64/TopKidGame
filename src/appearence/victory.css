@@ -43,8 +43,11 @@
     opacity: 1;
 }
 
-@media screen and (max-width: 768px) {
-    .victory-image {
-        width: 500px;
-    }
+.falling-item {
+    position: fixed;
+    pointer-events: none;
+    transform-style: preserve-3d;
+    transition: opacity 0.3s ease-out;
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
+    will-change: transform, opacity;
 }

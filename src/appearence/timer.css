@@ -22,14 +22,14 @@
 .timer-text {
     font-size: 32px;
     font-weight: bold;
-    color: #26BF31;
+    color: #00FF14;
     transition: all 0.3s ease;
     text-align: center;
     margin: auto;
 }
 
 .timer-text.warning {
-    color: #E80808;
+    color: #FF0000;
     animation: pulse 1s ease-in-out infinite;
 }
 

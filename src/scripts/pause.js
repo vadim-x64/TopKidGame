@@ -6,7 +6,6 @@ class GamePause {
     this.pauseSound = null;
     this.pauseIcon = 'https://cdn-icons-png.flaticon.com/128/15338/15338147.png';
     this.playIcon = 'https://cdn-icons-png.flaticon.com/128/16081/16081328.png';
-
     this.initializePauseSystem();
   }
 
@@ -129,6 +128,10 @@ class GamePause {
       window.gameMechanics.setVictoryState(true);
     }
 
+    if (window.gamePanel && window.gamePanel.isInitializing) {
+      window.gamePanel.pauseInitialization();
+    }
+
     this.pauseOverlay.classList.add('show');
 
     const shuffleButton = document.getElementById('shuffleButton');
@@ -169,6 +172,10 @@ class GamePause {
 
     if (window.gameMechanics) {
       window.gameMechanics.setVictoryState(false);
+    }
+
+    if (window.gamePanel && window.gamePanel.isInitializing) {
+      window.gamePanel.resumeInitialization();
     }
 
     this.pauseOverlay.classList.remove('show');

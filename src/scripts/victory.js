@@ -87,6 +87,10 @@ class VictoryHandler {
 
     setTimeout(() => {
       this.victoryImages.classList.add('show');
+
+      if (window.fallingAnimation) {
+        window.fallingAnimation.startAnimation();
+      }
     }, 100);
 
     setTimeout(() => {
@@ -98,6 +102,10 @@ class VictoryHandler {
     this.victoryOverlay.classList.remove('show');
     this.victoryImages.classList.remove('show');
     this.victoryImages.classList.add('hide');
+
+    if (window.fallingAnimation) {
+      window.fallingAnimation.stopCreatingItems();
+    }
 
     setTimeout(() => {
       this.victoryImages.classList.remove('hide');
@@ -124,6 +132,11 @@ class VictoryHandler {
 
   resetVictoryState() {
     this.gameWon = false;
+
+    if (window.fallingAnimation) {
+      window.fallingAnimation.clearAll();
+    }
+
     if (window.gameMechanics) {
       window.gameMechanics.setVictoryState(false);
     }
