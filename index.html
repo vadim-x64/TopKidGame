@@ -15,6 +15,7 @@
   <link rel="stylesheet" href="src/appearence/victory.css" />
   <link rel="stylesheet" href="src/appearence/timer.css" />
   <link rel="stylesheet" href="src/appearence/pause.css" />
+  <link rel="stylesheet" href="src/appearence/settings.css" />
 </head>
 <body>
 
@@ -67,6 +68,9 @@
   <button class="game-button" id="newGameButton">
     НОВА ГРА
   </button>
+  <button class="settings-button" id="settingsButton">
+    <img src="https://cdn-icons-png.flaticon.com/128/1522/1522107.png" alt="...">
+  </button>
 </div>
 
 <div class="game-panel" id="gamePanel">
@@ -79,6 +83,14 @@
   <div class="panel-grid" id="panelGrid"></div>
 </div>
 
+<div class="settings-modal" id="settingsModal">
+  <div class="settings-container">
+    <div class="settings-sidebar"></div>
+    <div class="settings-content"></div>
+    <button class="settings-close" id="settingsClose"></button>
+  </div>
+</div>
+
 <script src="src/scripts/splash.js"></script>
 <script src="src/scripts/panel.js"></script>
 <script src="src/scripts/index.js"></script>
@@ -87,5 +99,7 @@
 <script src="src/scripts/timer.js"></script>
 <script src="src/scripts/pause.js"></script>
 <script src="src/scripts/items.js"></script>
+<script src="src/scripts/scaling.js"></script>
+<script src="src/scripts/settings.js"></script>
 </body>
 </html>

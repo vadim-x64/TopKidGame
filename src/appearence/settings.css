@@ -1,0 +1,70 @@
+.settings-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.4s ease-in-out, visibility 0.4s ease-in-out, background-color 0.4s ease-in-out;
+}
+
+.settings-modal.show {
+    opacity: 1;
+    visibility: visible;
+}
+
+.settings-container {
+    width: 1000px;
+    height: 600px;
+    background-image: url("../resources/settings.jpg");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    border-radius: 10px;
+    overflow: hidden;
+    position: relative;
+    display: flex;
+    transform: scale(0.8);
+    transition: transform 0.4s ease-in-out;
+}
+
+.settings-modal.show .settings-container {
+    transform: scale(1);
+}
+
+.settings-sidebar {
+    width: 300px;
+    height: 100%;
+}
+
+.settings-content {
+    width: 700px;
+    height: 100%;
+}
+
+.settings-close {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    width: 40px;
+    height: 40px;
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    background-image: url('https://cdn-icons-png.flaticon.com/128/16001/16001871.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    transition: transform 0.2s ease;
+    z-index: 1001;
+}
+
+.settings-close:hover {
+    transform: scaleX(1.1);
+}
