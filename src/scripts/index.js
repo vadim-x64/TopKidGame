@@ -1,6 +1,8 @@
 class ClickSoundManager {
   constructor() {
     this.clickSound = null;
+    this.volume = 0.5;
+    this.enabled = true;
     this.init();
   }
 
@@ -8,7 +10,17 @@ class ClickSoundManager {
     this.clickSound = new Audio();
     this.clickSound.preload = 'auto';
     this.clickSound.src = 'src/resources/click.mp3';
+    this.updateVolumeFromSoundManager();
     this.addClickHandlers();
+  }
+
+  updateVolumeFromSoundManager() {
+    if (window.soundManager) {
+      const sfxVolume = window.soundManager.getCurrentSfxVolume();
+      const isMuted = window.soundManager.isSfxSoundMuted();
+      this.volume = isMuted ? 0 : sfxVolume;
+      this.clickSound.volume = this.volume;
+    }
   }
 
   addClickHandlers() {
@@ -58,7 +70,10 @@ class ClickSoundManager {
   }
 
   playClickSound() {
+    if (!this.enabled) return;
+
     try {
+      this.updateVolumeFromSoundManager();
       this.clickSound.currentTime = 0;
       this.clickSound.play().catch((error) => {
         console.log('Click sound autoplay prevented:', error);
@@ -74,6 +89,13 @@ class ClickSoundManager {
 
   setEnabled(enabled) {
     this.enabled = enabled;
+  }
+
+  setVolume(volume) {
+    this.volume = volume;
+    if (this.clickSound) {
+      this.clickSound.volume = volume;
+    }
   }
 }
 

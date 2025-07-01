@@ -63,6 +63,20 @@ class GameTimer {
     document.body.appendChild(this.defeatImages);
   }
 
+  updateVolumeFromSoundManager() {
+    if (window.soundManager) {
+      const sfxVolume = window.soundManager.getCurrentSfxVolume();
+      const isMuted = window.soundManager.isSfxSoundMuted();
+
+      if (this.warningSound) {
+        this.warningSound.volume = isMuted ? 0 : sfxVolume;
+      }
+      if (this.defeatSound) {
+        this.defeatSound.volume = isMuted ? 0 : sfxVolume;
+      }
+    }
+  }
+
   formatTime(seconds) {
     const mins = Math.floor(seconds / 60);
     const secs = seconds % 60;
@@ -135,6 +149,7 @@ class GameTimer {
     this.isPaused = false;
 
     if (this.timeLeft < 30 && this.warningPlayed && this.isWarningPlaying && this.warningSound.paused) {
+      this.updateVolumeFromSoundManager();
       this.warningSound.play().catch(() => {});
     }
 
@@ -185,6 +200,7 @@ class GameTimer {
   playWarning() {
     this.isWarningPlaying = true;
     this.warningStartTime = Date.now();
+    this.updateVolumeFromSoundManager();
     this.warningSound.currentTime = 0;
     this.warningSound.play().catch(() => {});
     this.timerContainer.classList.add('warning');
@@ -233,6 +249,7 @@ class GameTimer {
       gameMusic.pause();
     }
 
+    this.updateVolumeFromSoundManager();
     this.defeatSound.currentTime = 0;
     this.defeatSound.play().catch(() => {});
     this.defeatOverlay.classList.add('show');

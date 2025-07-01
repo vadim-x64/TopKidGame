@@ -32,6 +32,7 @@
 }
 
 .splash-logo {
+    margin-bottom: 20px;
     width: 250px;
     height: auto;
     animation: logoAnimation 1s cubic-bezier(0.45, 0.05, 0.55, 0.95) 2s forwards;
@@ -89,6 +90,10 @@
 }
 
 @media screen and (max-width: 768px) {
+    .splash-logo {
+        width: 150px;
+    }
+
     .main-text {
         font-size: 72px;
     }

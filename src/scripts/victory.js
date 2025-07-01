@@ -32,6 +32,14 @@ class VictoryHandler {
     document.body.appendChild(this.victoryImages);
   }
 
+  updateVolumeFromSoundManager() {
+    if (window.soundManager && this.victorySound) {
+      const sfxVolume = window.soundManager.getCurrentSfxVolume();
+      const isMuted = window.soundManager.isSfxSoundMuted();
+      this.victorySound.volume = isMuted ? 0 : sfxVolume;
+    }
+  }
+
   showVictory() {
     if (this.isVictoryPlaying) return;
 
@@ -78,6 +86,7 @@ class VictoryHandler {
       gameMusic.pause();
     }
 
+    this.updateVolumeFromSoundManager();
     this.victorySound.currentTime = 0;
     this.victorySound.play().catch(error => {
       console.log('Victory sound could not be played:', error);

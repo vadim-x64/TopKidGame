@@ -43,6 +43,14 @@ class GamePause {
     document.body.appendChild(this.pauseSound);
   }
 
+  updateVolumeFromSoundManager() {
+    if (window.soundManager && this.pauseSound) {
+      const sfxVolume = window.soundManager.getCurrentSfxVolume();
+      const isMuted = window.soundManager.isSfxSoundMuted();
+      this.pauseSound.volume = isMuted ? 0 : sfxVolume;
+    }
+  }
+
   bindEvents() {
     this.pauseButton.addEventListener('click', () => {
       this.togglePause();
@@ -102,6 +110,7 @@ class GamePause {
     if (this.isPaused) return;
 
     this.isPaused = true;
+    this.updateVolumeFromSoundManager();
     this.pauseSound.currentTime = 0;
     this.pauseSound.play().catch(() => {});
 
@@ -152,6 +161,7 @@ class GamePause {
     if (!this.isPaused) return;
 
     this.isPaused = false;
+    this.updateVolumeFromSoundManager();
     this.pauseSound.currentTime = 0;
     this.pauseSound.play().catch(() => {});
 

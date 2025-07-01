@@ -135,6 +135,10 @@ class GamePanel {
   }
 
   showConfirmModal() {
+    if (window.gameTimer && window.gameTimer.isGameRunning()) {
+      window.gameTimer.pauseTimer();
+    }
+
     this.modalOverlay.style.display = 'flex';
 
     const confirmButton = document.getElementById('confirmButton');
@@ -148,6 +152,10 @@ class GamePanel {
     };
 
     const cancelHandler = () => {
+      if (window.gameTimer && window.gameTimer.isTimerPaused()) {
+        window.gameTimer.resumeTimer();
+      }
+
       this.modalOverlay.style.display = 'none';
       confirmButton.removeEventListener('click', confirmHandler);
       cancelButton.removeEventListener('click', cancelHandler);

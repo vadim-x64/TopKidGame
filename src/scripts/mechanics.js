@@ -9,7 +9,18 @@ class GameMechanics {
     this.dragThreshold = 5;
     this.isVictoryPlaying = false;
     this.transitionSound = new Audio('src/resources/transition.mp3');
+    this.updateTransitionSoundVolume();
     this.bindEvents();
+  }
+
+  updateTransitionSoundVolume() {
+    if (window.soundManager) {
+      const sfxVolume = window.soundManager.getCurrentSfxVolume();
+      const isMuted = window.soundManager.isSfxSoundMuted();
+      this.transitionSound.volume = isMuted ? 0 : sfxVolume;
+    } else {
+      this.transitionSound.volume = 0.5;
+    }
   }
 
   bindEvents() {
@@ -318,8 +329,12 @@ class GameMechanics {
     gamePanel.grid[toRow][toCol] = value;
     gamePanel.emptyPosition = { row: fromRow, col: fromCol };
 
-    this.transitionSound.currentTime = 0;
-    this.transitionSound.play().catch(() => {});
+    this.updateTransitionSoundVolume();
+
+    if (this.transitionSound.volume > 0) {
+      this.transitionSound.currentTime = 0;
+      this.transitionSound.play().catch(() => {});
+    }
 
     this.updateDOM(fromRow, fromCol, toRow, toCol, value);
 
@@ -365,6 +380,12 @@ class GameMechanics {
       }
     }
     return true;
+  }
+
+  setTransitionVolume(volume) {
+    if (this.transitionSound) {
+      this.transitionSound.volume = volume;
+    }
   }
 }
 
