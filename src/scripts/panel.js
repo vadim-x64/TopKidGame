@@ -100,12 +100,14 @@ class GamePanel {
     }
   }
 
-  showBackButton() {
+  showGameButtons() {
     const backButton = document.getElementById('backButton');
     const shuffleButton = document.getElementById('shuffleButton');
+    const gameSettingsButton = document.getElementById('gameSettingsButton');
 
     backButton.style.display = 'block';
     shuffleButton.style.display = 'block';
+    gameSettingsButton.style.display = 'block';
 
     backButton.addEventListener('click', () => {
       this.showConfirmModal();
@@ -114,6 +116,16 @@ class GamePanel {
     shuffleButton.addEventListener('click', () => {
       this.shuffleAndRender();
     });
+
+    gameSettingsButton.addEventListener('click', () => {
+      if (window.settingsModal) {
+        window.settingsModal.openModal();
+      }
+    });
+  }
+
+  showBackButton() {
+    this.showGameButtons();
   }
 
   shuffleAndRender() {
@@ -234,7 +246,7 @@ class GamePanel {
 
           this.shuffleGrid();
           this.renderPanel();
-          this.showBackButton();
+          this.showGameButtons();
 
           if (window.gameTimer) {
             window.gameTimer.startTimer();
@@ -257,6 +269,7 @@ class GamePanel {
     const gamePanel = document.getElementById('gamePanel');
     const backButton = document.getElementById('backButton');
     const shuffleButton = document.getElementById('shuffleButton');
+    const gameSettingsButton = document.getElementById('gameSettingsButton');
 
     this.loadingScreen.style.display = 'flex';
 
@@ -285,6 +298,10 @@ class GamePanel {
         shuffleButton.style.opacity = '0';
         shuffleButton.style.transform = 'scale(0.8)';
 
+        gameSettingsButton.style.transition = 'opacity 0.5s ease-in-out, transform 0.5s ease-in-out';
+        gameSettingsButton.style.opacity = '0';
+        gameSettingsButton.style.transform = 'scale(0.8)';
+
         gamePanel.style.transform = 'scale(0.3)';
         gamePanel.style.opacity = '0';
 
@@ -298,6 +315,11 @@ class GamePanel {
           shuffleButton.style.opacity = '';
           shuffleButton.style.transform = '';
           shuffleButton.style.transition = '';
+
+          gameSettingsButton.style.display = 'none';
+          gameSettingsButton.style.opacity = '';
+          gameSettingsButton.style.transform = '';
+          gameSettingsButton.style.transition = '';
 
           gamePanel.classList.remove('show');
           gamePanel.style.display = 'none';
