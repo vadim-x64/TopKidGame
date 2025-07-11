@@ -1,0 +1,155 @@
+.gameplay-tab {
+    width: 100%;
+    height: 60px;
+    background: linear-gradient(135deg, #4a5d23, #6b8e23);
+    border: none;
+    border-radius: 50px;
+    border-bottom: 2px solid rgba(139, 69, 19, 0.3);
+    color: #f4e4bc;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    margin: 10px;
+    transition: all 0.3s ease;
+    position: relative;
+}
+
+.gameplay-tab-icon {
+    width: 24px;
+    height: 24px;
+    filter: brightness(0) saturate(100%) invert(89%) sepia(15%) saturate(384%) hue-rotate(12deg) brightness(98%) contrast(92%);
+}
+
+.gameplay-content {
+    display: none;
+    padding: 30px;
+    color: #f4e4bc;
+}
+
+.gameplay-content.active {
+    display: block;
+}
+
+.gameplay-content h3 {
+    margin: 0 0 25px 0;
+    font-size: 24px;
+    color: #f4e4bc;
+    text-align: center;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+.gameplay-option {
+    margin-bottom: 30px;
+}
+
+.checkbox-container {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding: 20px;
+    background: linear-gradient(135deg, rgba(74, 93, 35, 0.3), rgba(107, 142, 35, 0.3));
+    border-radius: 8px;
+    border: 2px solid rgba(139, 69, 19, 0.3);
+    cursor: pointer;
+}
+
+.custom-checkbox {
+    width: 24px;
+    height: 24px;
+    border: 2px solid #f4e4bc;
+    border-radius: 4px;
+    background: linear-gradient(135deg, #3a4a1a, #2a3a0a);
+    position: relative;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.custom-checkbox.checked {
+    background: linear-gradient(135deg, #8fbc8f, #6b8e23);
+    border-color: #f4e4bc;
+}
+
+.custom-checkbox.checked::after {
+    content: '';
+    position: absolute;
+    left: 7px;
+    top: 3px;
+    width: 6px;
+    height: 12px;
+    border: solid #f4e4bc;
+    border-width: 0 2px 2px 0;
+    transform: rotate(45deg);
+}
+
+.checkbox-label {
+    font-size: 16px;
+    font-weight: bold;
+    color: #f4e4bc;
+    cursor: pointer;
+    flex: 1;
+}
+
+.checkbox-description {
+    font-size: 14px;
+    color: #d4c4a8;
+    margin-top: 5px;
+    line-height: 1.4;
+}
+
+.hidden-checkbox {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+    height: 0;
+    width: 0;
+}
+
+@media screen and (max-width: 768px) {
+    .gameplay-tab {
+        width: 100%;
+        height: 50px;
+        margin: auto;
+        font-size: 14px;
+        padding: 10px;
+        justify-content: center;
+        gap: 10px;
+    }
+
+    .gameplay-content h3 {
+        font-size: 20px;
+    }
+
+    .checkbox-container {
+        gap: 10px;
+        padding: 15px;
+    }
+
+    .checkbox-label {
+        font-size: 14px;
+    }
+
+    .checkbox-description {
+        font-size: 12px;
+    }
+
+    .custom-checkbox {
+        width: 20px;
+        height: 20px;
+    }
+
+    .custom-checkbox.checked::after {
+        left: 6px;
+        top: 2px;
+        width: 5px;
+        height: 10px;
+    }
+
+    .gameplay-tab-icon {
+        width: 20px;
+        height: 20px;
+    }
+}

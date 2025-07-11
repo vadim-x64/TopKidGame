@@ -192,6 +192,7 @@ class SoundManager {
     if (this.isPanelOpen) {
       this.closeSoundPanel();
     } else {
+      this.closeAllPanels();
       this.showSoundPanel();
     }
   }
@@ -230,7 +231,18 @@ class SoundManager {
       this.soundTab.classList.remove('active');
     }
     this.isPanelOpen = false;
-    this.showEmptyPanel();
+  }
+
+  closeAllPanels() {
+    if (window.gameplayManager && window.gameplayManager.isGameplayPanelOpen()) {
+      window.gameplayManager.closeGameplayPanel();
+    }
+
+    const allContents = document.querySelectorAll('.settings-content > div');
+    const allTabs = document.querySelectorAll('.settings-sidebar button');
+
+    allContents.forEach(content => content.classList.remove('active'));
+    allTabs.forEach(tab => tab.classList.remove('active'));
   }
 
   isSoundPanelOpen() {

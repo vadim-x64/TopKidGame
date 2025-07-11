@@ -1,7 +1,7 @@
 setTimeout(() => {
   const splashScreen = document.getElementById('splashScreen');
   const mainMenu = document.getElementById('mainMenu');
-  const settingsButton = document.getElementById('settingsButton'); // Отримуємо кнопку
+  const settingsButton = document.getElementById('settingsButton');
   const backgroundVideo = document.getElementById('backgroundVideo');
   const backgroundMusic = document.getElementById('backgroundMusic');
 
@@ -11,7 +11,7 @@ setTimeout(() => {
     splashScreen.style.display = 'none';
     backgroundVideo.classList.add('show');
     mainMenu.style.display = 'flex';
-    settingsButton.style.display = 'block'; // Показуємо кнопку
+    settingsButton.style.display = 'block';
     backgroundMusic.play().catch(() => {});
   }, 1000);
-}, 0);
+}, 5000);
