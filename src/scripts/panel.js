@@ -148,7 +148,7 @@ class GamePanel {
       gameSettingsButton.style.pointerEvents = '';
     }
 
-    this.shuffleGrid();
+    // this.shuffleGrid();
     this.renderPanel();
   }
 
@@ -250,7 +250,7 @@ class GamePanel {
           gamePanel.style.display = 'flex';
           this.loadingScreen.style.display = 'none';
 
-          this.shuffleGrid();
+          // this.shuffleGrid();
           this.renderPanel();
           this.showGameButtons();
 
@@ -296,36 +296,30 @@ class GamePanel {
         this.backgroundMusic.currentTime = 0;
         this.backgroundMusic.play().catch(() => {});
 
-        backButton.style.transition = 'opacity 0.5s ease-in-out, transform 0.5s ease-in-out';
-        backButton.style.opacity = '0';
-        backButton.style.transform = 'scale(0.8)';
-
-        shuffleButton.style.transition = 'opacity 0.5s ease-in-out, transform 0.5s ease-in-out';
-        shuffleButton.style.opacity = '0';
-        shuffleButton.style.transform = 'scale(0.8)';
-
-        gameSettingsButton.style.transition = 'opacity 0.5s ease-in-out, transform 0.5s ease-in-out';
-        gameSettingsButton.style.opacity = '0';
-        gameSettingsButton.style.transform = 'scale(0.8)';
+        // Анімація приховування кнопок БЕЗ впливу на позиціонування
+        [backButton, shuffleButton, gameSettingsButton].forEach(button => {
+          if (button) {
+            button.style.transition = 'opacity 0.5s ease-in-out, transform 0.5s ease-in-out';
+            button.style.opacity = '0';
+            button.style.transform = 'scale(0.8)';
+          }
+        });
 
         gamePanel.style.transform = 'scale(0.3)';
         gamePanel.style.opacity = '0';
 
         setTimeout(() => {
-          backButton.style.display = 'none';
-          backButton.style.opacity = '';
-          backButton.style.transform = '';
-          backButton.style.transition = '';
-
-          shuffleButton.style.display = 'none';
-          shuffleButton.style.opacity = '';
-          shuffleButton.style.transform = '';
-          shuffleButton.style.transition = '';
-
-          gameSettingsButton.style.display = 'none';
-          gameSettingsButton.style.opacity = '';
-          gameSettingsButton.style.transform = '';
-          gameSettingsButton.style.transition = '';
+          // Правильне скидання стилів кнопок
+          [backButton, shuffleButton, gameSettingsButton].forEach(button => {
+            if (button) {
+              button.style.display = 'none';
+              // Скидаємо тільки анімаційні властивості, НЕ позиціонування
+              button.style.opacity = '';
+              button.style.transform = '';
+              button.style.transition = '';
+              // НЕ скидаємо position, bottom, left, right, top!
+            }
+          });
 
           gamePanel.classList.remove('show');
           gamePanel.style.display = 'none';
