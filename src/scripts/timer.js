@@ -209,7 +209,6 @@ class GameTimer {
 
   triggerDefeat() {
     this.stopTimer();
-
     if (this.timerText.classList.contains('warning')) {
       this.timerText.style.animation = 'none';
     }
@@ -225,6 +224,8 @@ class GameTimer {
 
     const backButton = document.getElementById('backButton');
     const shuffleButton = document.getElementById('shuffleButton');
+    const gameSettingsButton = document.getElementById('gameSettingsButton'); // Додано
+
     if (backButton) {
       backButton.disabled = true;
       backButton.style.opacity = '0.5';
@@ -234,6 +235,12 @@ class GameTimer {
       shuffleButton.disabled = true;
       shuffleButton.style.opacity = '0.5';
       shuffleButton.style.pointerEvents = 'none';
+    }
+    // Додано: блокування кнопки налаштувань
+    if (gameSettingsButton) {
+      gameSettingsButton.disabled = true;
+      gameSettingsButton.style.opacity = '0.5';
+      gameSettingsButton.style.pointerEvents = 'none';
     }
 
     if (window.gamePause) {
@@ -253,11 +260,9 @@ class GameTimer {
     this.defeatSound.currentTime = 0;
     this.defeatSound.play().catch(() => {});
     this.defeatOverlay.classList.add('show');
-
     setTimeout(() => {
       this.defeatImages.classList.add('show');
     }, 100);
-
     setTimeout(() => {
       this.hideDefeat();
     }, 5000);

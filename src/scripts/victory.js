@@ -44,7 +44,6 @@ class VictoryHandler {
     if (this.isVictoryPlaying) return;
 
     this.isVictoryPlaying = true;
-
     if (window.gameTimer) {
       window.gameTimer.stopTimer();
 
@@ -62,6 +61,8 @@ class VictoryHandler {
 
     const backButton = document.getElementById('backButton');
     const shuffleButton = document.getElementById('shuffleButton');
+    const gameSettingsButton = document.getElementById('gameSettingsButton'); // Додано
+
     if (backButton) {
       backButton.disabled = true;
       backButton.style.opacity = '0.5';
@@ -71,6 +72,12 @@ class VictoryHandler {
       shuffleButton.disabled = true;
       shuffleButton.style.opacity = '0.5';
       shuffleButton.style.pointerEvents = 'none';
+    }
+    // Додано: блокування кнопки налаштувань
+    if (gameSettingsButton) {
+      gameSettingsButton.disabled = true;
+      gameSettingsButton.style.opacity = '0.5';
+      gameSettingsButton.style.pointerEvents = 'none';
     }
 
     if (window.gamePause) {
@@ -91,7 +98,6 @@ class VictoryHandler {
     this.victorySound.play().catch(error => {
       console.log('Victory sound could not be played:', error);
     });
-
     this.victoryOverlay.classList.add('show');
 
     setTimeout(() => {
@@ -101,7 +107,6 @@ class VictoryHandler {
         window.fallingAnimation.startAnimation();
       }
     }, 100);
-
     setTimeout(() => {
       this.hideVictory();
     }, 5000);

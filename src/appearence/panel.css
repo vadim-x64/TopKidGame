@@ -206,7 +206,7 @@
     }
 
     .shuffle-button:focus {
-        transform: rotate(180deg) scaleX(1.2);
+        transform: rotate(180deg) scaleX(1.1);
     }
 
     .game-settings-button:focus {

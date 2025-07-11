@@ -131,7 +131,6 @@ class GamePanel {
   shuffleAndRender() {
     if (window.victoryHandler) {
       window.victoryHandler.resetVictoryState();
-
       if (window.gameTimer) {
         window.gameTimer.resetTimer();
         window.gameTimer.startTimer();
@@ -140,6 +139,13 @@ class GamePanel {
 
     if (window.gamePause) {
       window.gamePause.enablePauseButton();
+    }
+
+    const gameSettingsButton = document.getElementById('gameSettingsButton');
+    if (gameSettingsButton) {
+      gameSettingsButton.disabled = false;
+      gameSettingsButton.style.opacity = '';
+      gameSettingsButton.style.pointerEvents = '';
     }
 
     this.shuffleGrid();
