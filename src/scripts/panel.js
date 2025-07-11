@@ -148,7 +148,7 @@ class GamePanel {
       gameSettingsButton.style.pointerEvents = '';
     }
 
-    // this.shuffleGrid();
+    this.shuffleGrid();
     this.renderPanel();
   }
 
@@ -250,7 +250,7 @@ class GamePanel {
           gamePanel.style.display = 'flex';
           this.loadingScreen.style.display = 'none';
 
-          // this.shuffleGrid();
+          this.shuffleGrid();
           this.renderPanel();
           this.showGameButtons();
 
@@ -296,7 +296,6 @@ class GamePanel {
         this.backgroundMusic.currentTime = 0;
         this.backgroundMusic.play().catch(() => {});
 
-        // Анімація приховування кнопок
         backButton.style.transition = 'opacity 0.5s ease-in-out, transform 0.5s ease-in-out';
         backButton.style.opacity = '0';
         backButton.style.transform = 'scale(0.8)';
@@ -313,10 +312,20 @@ class GamePanel {
         gamePanel.style.opacity = '0';
 
         setTimeout(() => {
-          // ПРОСТО ХОВАЄМО КНОПКИ, НЕ СКИДАЄМО СТИЛІ!
           backButton.style.display = 'none';
+          backButton.style.opacity = '';
+          backButton.style.transform = '';
+          backButton.style.transition = '';
+
           shuffleButton.style.display = 'none';
+          shuffleButton.style.opacity = '';
+          shuffleButton.style.transform = '';
+          shuffleButton.style.transition = '';
+
           gameSettingsButton.style.display = 'none';
+          gameSettingsButton.style.opacity = '';
+          gameSettingsButton.style.transform = '';
+          gameSettingsButton.style.transition = '';
 
           gamePanel.classList.remove('show');
           gamePanel.style.display = 'none';

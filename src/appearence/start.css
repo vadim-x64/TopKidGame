@@ -44,7 +44,7 @@
 }
 
 .settings-button {
-    position: fixed;
+    position: absolute;
     bottom: 30px;
     right: 30px;
     width: 70px;
