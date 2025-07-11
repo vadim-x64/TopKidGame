@@ -60,13 +60,13 @@
 .settings-close {
     position: absolute;
     top: 5px;
-    right: 5px;
-    width: 30px;
-    height: 30px;
+    right: 10px;
+    width: 50px;
+    height: 50px;
     background-color: transparent;
     border: none;
     cursor: pointer;
-    background-image: url('https://cdn-icons-png.flaticon.com/128/18294/18294863.png');
+    background-image: url('https://cdn-icons-png.flaticon.com/128/6993/6993256.png');
     background-size: contain;
     background-repeat: no-repeat;
     background-position: center;

@@ -104,10 +104,12 @@ class GamePanel {
     const backButton = document.getElementById('backButton');
     const shuffleButton = document.getElementById('shuffleButton');
     const gameSettingsButton = document.getElementById('gameSettingsButton');
+    const settingsButton = document.getElementById('settingsButton');
 
     backButton.style.display = 'block';
     shuffleButton.style.display = 'block';
     gameSettingsButton.style.display = 'block';
+    settingsButton.style.display = 'none';
 
     backButton.addEventListener('click', () => {
       this.showConfirmModal();
@@ -148,7 +150,7 @@ class GamePanel {
       gameSettingsButton.style.pointerEvents = '';
     }
 
-    // this.shuffleGrid();
+    this.shuffleGrid();
     this.renderPanel();
   }
 
@@ -250,7 +252,7 @@ class GamePanel {
           gamePanel.style.display = 'flex';
           this.loadingScreen.style.display = 'none';
 
-          // this.shuffleGrid();
+          this.shuffleGrid();
           this.renderPanel();
           this.showGameButtons();
 
@@ -276,6 +278,7 @@ class GamePanel {
     const backButton = document.getElementById('backButton');
     const shuffleButton = document.getElementById('shuffleButton');
     const gameSettingsButton = document.getElementById('gameSettingsButton');
+    const settingsButton = document.getElementById('settingsButton');
 
     this.loadingScreen.style.display = 'flex';
 
@@ -310,6 +313,8 @@ class GamePanel {
 
         gamePanel.style.transform = 'scale(0.3)';
         gamePanel.style.opacity = '0';
+
+        settingsButton.style.display = 'block';
 
         setTimeout(() => {
           backButton.style.display = 'none';
