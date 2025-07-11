@@ -148,7 +148,7 @@ class GamePanel {
       gameSettingsButton.style.pointerEvents = '';
     }
 
-    this.shuffleGrid();
+    // this.shuffleGrid();
     this.renderPanel();
   }
 
@@ -250,7 +250,7 @@ class GamePanel {
           gamePanel.style.display = 'flex';
           this.loadingScreen.style.display = 'none';
 
-          this.shuffleGrid();
+          // this.shuffleGrid();
           this.renderPanel();
           this.showGameButtons();
 
