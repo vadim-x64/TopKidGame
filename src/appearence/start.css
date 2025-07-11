@@ -44,17 +44,16 @@
 }
 
 .settings-button {
-    position: absolute !important;
-    bottom: 30px !important;
-    right: 30px !important;
+    position: absolute;
+    bottom: 30px;
+    right: 30px;
     width: 70px;
     height: 70px;
     background-color: transparent;
     border: none;
     cursor: pointer;
     transition: transform 0.2s ease;
-    z-index: 10 !important;
-    display: block !important; /* Забезпечуємо показ кнопки */
+    z-index: 10;
 }
 
 .settings-button:hover {
@@ -89,10 +88,10 @@
     }
 
     .settings-button {
-        width: 50px !important;
-        height: 50px !important;
-        bottom: 20px !important;
-        right: 20px !important;
+        width: 50px;
+        height: 50px;
+        bottom: 20px;
+        right: 20px;
     }
 
     .settings-button:hover {

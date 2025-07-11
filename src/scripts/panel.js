@@ -229,7 +229,6 @@ class GamePanel {
   showPanel() {
     const mainMenu = document.getElementById('mainMenu');
     const gamePanel = document.getElementById('gamePanel');
-    const settingsButton = document.getElementById('settingsButton'); // Додано
 
     this.loadingScreen.style.display = 'flex';
 
@@ -245,11 +244,6 @@ class GamePanel {
 
         mainMenu.style.opacity = '0';
         mainMenu.style.transform = 'scale(0.8)';
-
-        // Приховуємо settings-button головного меню
-        if (settingsButton) {
-          settingsButton.style.display = 'none';
-        }
 
         setTimeout(() => {
           mainMenu.style.display = 'none';
@@ -282,7 +276,6 @@ class GamePanel {
     const backButton = document.getElementById('backButton');
     const shuffleButton = document.getElementById('shuffleButton');
     const gameSettingsButton = document.getElementById('gameSettingsButton');
-    const settingsButton = document.getElementById('settingsButton'); // Додано
 
     this.loadingScreen.style.display = 'flex';
 
@@ -343,24 +336,6 @@ class GamePanel {
           mainMenu.style.display = 'flex';
           mainMenu.style.opacity = '0';
           mainMenu.style.transform = 'scale(0.8)';
-
-          // Відновлюємо settings-button в головному меню
-          if (settingsButton) {
-            settingsButton.style.display = 'block';
-            settingsButton.style.opacity = '';
-            settingsButton.style.transform = '';
-            settingsButton.style.transition = '';
-            settingsButton.style.position = 'absolute';
-            settingsButton.style.bottom = '30px';
-            settingsButton.style.right = '30px';
-            settingsButton.style.zIndex = '10';
-
-            // Для мобільних пристроїв
-            if (window.innerWidth <= 768) {
-              settingsButton.style.bottom = '20px';
-              settingsButton.style.right = '20px';
-            }
-          }
 
           setTimeout(() => {
             mainMenu.style.opacity = '1';
