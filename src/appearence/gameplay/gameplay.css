@@ -63,9 +63,12 @@
     border: 2px solid #f4e4bc;
     border-radius: 4px;
     background: linear-gradient(135deg, #3a4a1a, #2a3a0a);
-    position: relative;
     cursor: pointer;
     transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
 }
 
 .custom-checkbox.checked {
@@ -75,9 +78,6 @@
 
 .custom-checkbox.checked::after {
     content: '';
-    position: absolute;
-    left: 7px;
-    top: 3px;
     width: 6px;
     height: 12px;
     border: solid #f4e4bc;
@@ -142,8 +142,6 @@
     }
 
     .custom-checkbox.checked::after {
-        left: 6px;
-        top: 2px;
         width: 5px;
         height: 10px;
     }
