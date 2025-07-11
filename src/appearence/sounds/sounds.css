@@ -3,9 +3,9 @@
     height: 60px;
     background: linear-gradient(135deg, #4a5d23, #6b8e23);
     border: none;
+    border-radius: 50px;
     border-bottom: 2px solid rgba(139, 69, 19, 0.3);
     color: #f4e4bc;
-    font-family: 'Kurale', serif;
     font-size: 16px;
     font-weight: bold;
     cursor: pointer;
@@ -13,6 +13,7 @@
     align-items: center;
     justify-content: center;
     gap: 10px;
+    margin: 10px;
     transition: all 0.3s ease;
     position: relative;
 }
@@ -27,7 +28,6 @@
     display: none;
     padding: 30px;
     color: #f4e4bc;
-    font-family: 'Kurale', serif;
 }
 
 .sound-content.active {
@@ -121,7 +121,6 @@
     border: 2px solid #f4e4bc;
     border-radius: 8px;
     color: #f4e4bc;
-    font-family: 'Kurale', serif;
     font-size: 16px;
     font-weight: bold;
     cursor: pointer;
@@ -156,4 +155,51 @@
     width: 20px;
     height: 20px;
     filter: brightness(0) saturate(100%) invert(89%) sepia(15%) saturate(384%) hue-rotate(12deg) brightness(98%) contrast(92%);
+}
+
+@media screen and (max-width: 768px) {
+    .sound-tab {
+        width: 100%;
+        height: 50px;
+        margin: auto;
+        font-size: 14px;
+        padding: 10px;
+        justify-content: center;
+        gap: 10px;
+    }
+
+    .sound-content h3 {
+        font-size: 20px;
+    }
+
+    .volume-label {
+        font-size: 14px;
+        margin-top: 20px;
+    }
+
+    .volume-slider-container {
+        gap: 10px;
+        margin-bottom: 15px;
+    }
+
+    .volume-value {
+        min-width: 30px;
+        font-size: 12px;
+    }
+
+    .volume-slider {
+        height: 5px;
+    }
+
+    .volume-slider::-webkit-slider-thumb, .volume-slider::-moz-range-thumb, .mute-icon, .sound-tab-icon {
+        width: 20px;
+        height: 20px;
+    }
+
+    .mute-button {
+        height: 50px;
+        font-size: 14px;
+        border-radius: 5px;
+        gap: 10px;
+    }
 }
