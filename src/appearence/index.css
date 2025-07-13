@@ -9,6 +9,11 @@
     text-rendering: optimizeLegibility;
 }
 
+*:focus,
+*:active {
+    outline: none;
+}
+
 body {
     font-family: 'Kurale', serif;
     height: 100vh;
