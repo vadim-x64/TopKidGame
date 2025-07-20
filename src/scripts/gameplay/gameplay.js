@@ -6,15 +6,34 @@ class GameplayManager {
     this.gameplayContent = null;
     this.timerCheckbox = null;
     this.isPanelOpen = false;
+    this.confirmModal = null;
     this.loadSettings();
     this.init();
   }
 
   init() {
     this.createGameplayPanel();
+    this.createConfirmModal();
     this.bindEvents();
     this.bindSettingsCloseEvent();
     this.updateUI();
+  }
+
+  createConfirmModal() {
+    this.confirmModal = document.createElement('div');
+    this.confirmModal.className = 'modal-overlay';
+    this.confirmModal.id = 'timerChangeModal';
+    this.confirmModal.innerHTML = `
+      <div class="modal">
+        <h3>Змінити режим таймера?</h3>
+        <p>Поточна гра буде перезапущена</p>
+        <div class="modal-buttons">
+          <button class="modal-button cancel" id="timerCancelButton">Скасувати</button>
+          <button class="modal-button confirm" id="timerConfirmButton">Так, змінити</button>
+        </div>
+      </div>
+    `;
+    document.body.appendChild(this.confirmModal);
   }
 
   bindSettingsCloseEvent() {
@@ -57,6 +76,11 @@ class GameplayManager {
   resetToDefaults() {
     this.isTimerDisabled = false;
     this.saveSettings();
+  }
+
+  isGameActive() {
+    const gamePanel = document.getElementById('gamePanel');
+    return gamePanel && (gamePanel.style.display === 'flex' || gamePanel.classList.contains('show'));
   }
 
   createGameplayPanel() {
@@ -111,15 +135,80 @@ class GameplayManager {
     });
 
     this.timerCheckbox.addEventListener('change', () => {
-      this.toggleTimer();
+      this.handleTimerToggle();
     });
 
     this.timerCheckboxContainer.addEventListener('click', (e) => {
       if (e.target !== this.timerCheckbox) {
         this.timerCheckbox.checked = !this.timerCheckbox.checked;
-        this.toggleTimer();
+        this.handleTimerToggle();
       }
     });
+
+    const confirmButton = document.getElementById('timerConfirmButton');
+    const cancelButton = document.getElementById('timerCancelButton');
+
+    if (confirmButton && cancelButton) {
+      confirmButton.addEventListener('click', () => {
+        this.confirmTimerChange();
+      });
+
+      cancelButton.addEventListener('click', () => {
+        this.cancelTimerChange();
+      });
+    }
+  }
+
+  handleTimerToggle() {
+    const newTimerState = this.timerCheckbox.checked;
+
+    if (!this.isGameActive()) {
+      this.isTimerDisabled = newTimerState;
+      this.updateUI();
+      this.saveSettings();
+      return;
+    }
+
+    this.showConfirmModal();
+  }
+
+  showConfirmModal() {
+    if (window.gameTimer && window.gameTimer.isGameRunning()) {
+      window.gameTimer.pauseTimer();
+    }
+
+    this.confirmModal.style.display = 'flex';
+  }
+
+  confirmTimerChange() {
+    const newTimerState = this.timerCheckbox.checked;
+    this.isTimerDisabled = newTimerState;
+    this.updateUI();
+    this.saveSettings();
+    this.confirmModal.style.display = 'none';
+    this.closeGameplayPanel();
+
+    if (window.settingsModal) {
+      window.settingsModal.closeModal();
+    }
+
+    this.restartGame();
+  }
+
+  cancelTimerChange() {
+    this.timerCheckbox.checked = this.isTimerDisabled;
+    this.updateUI();
+    this.confirmModal.style.display = 'none';
+
+    if (window.gameTimer && window.gameTimer.isTimerPaused()) {
+      window.gameTimer.resumeTimer();
+    }
+  }
+
+  restartGame() {
+    if (window.gamePanel) {
+      window.gamePanel.shuffleAndRender();
+    }
   }
 
   toggleGameplayPanel() {
@@ -167,12 +256,6 @@ class GameplayManager {
 
   isGameplayPanelOpen() {
     return this.isPanelOpen;
-  }
-
-  toggleTimer() {
-    this.isTimerDisabled = this.timerCheckbox.checked;
-    this.updateUI();
-    this.saveSettings();
   }
 
   updateUI() {

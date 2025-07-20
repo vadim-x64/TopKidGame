@@ -84,6 +84,11 @@ class GameTimer {
   }
 
   startTimer() {
+    if (window.gameplayManager && window.gameplayManager.getTimerDisabled()) {
+      this.timerContainer.classList.remove('show');
+      return;
+    }
+
     if (this.isRunning) return;
 
     this.isRunning = true;
@@ -179,7 +184,13 @@ class GameTimer {
     this.warningStartTime = null;
     this.timerContainer.classList.remove('warning');
     this.timerText.classList.remove('warning');
-    this.timerContainer.classList.add('show');
+
+    if (!window.gameplayManager || !window.gameplayManager.getTimerDisabled()) {
+      this.timerContainer.classList.add('show');
+    } else {
+      this.timerContainer.classList.remove('show');
+    }
+
     this.timerText.style.animation = '';
 
     if (this.warningSound) {
