@@ -3,7 +3,7 @@
     bottom: 20px;
     right: 20px;
     width: 200px;
-    backdrop-filter: blur(10px);
+    backdrop-filter: blur(30px);
     padding: 5px 10px;
     border-radius: 200px;
     border: none;
@@ -22,14 +22,14 @@
 .timer-text {
     font-size: 32px;
     font-weight: bold;
-    color: #00FF14;
+    color: #005383;
     transition: all 0.3s ease;
     text-align: center;
     margin: auto;
 }
 
 .timer-text.warning {
-    color: #FF0000;
+    color: #cc2525;
     animation: pulse 1s ease-in-out infinite;
 }
 

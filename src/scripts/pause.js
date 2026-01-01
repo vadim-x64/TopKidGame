@@ -4,8 +4,9 @@ class GamePause {
     this.pauseButton = null;
     this.pauseOverlay = null;
     this.pauseSound = null;
-    this.pauseIcon = 'https://cdn-icons-png.flaticon.com/128/15338/15338147.png';
-    this.playIcon = 'https://cdn-icons-png.flaticon.com/128/16081/16081328.png';
+    this.pauseIcon =
+      'https://cdn-icons-png.flaticon.com/128/15338/15338099.png';
+    this.playIcon = 'https://cdn-icons-png.flaticon.com/128/11281/11281043.png';
     this.initializePauseSystem();
   }
 

@@ -181,12 +181,12 @@ class GameMechanics {
     transition: none;
     transform-origin: center;
     box-shadow: 0 15px 30px rgba(0, 0, 0, 0.4);
-    filter: brightness(1.2);
-    background: linear-gradient(145deg, #FFB347, #FF8C00) !important;
+    
+    background: linear-gradient(135deg, #2192f3, #2192f3, #78c5fd, #cbe5ff) !important;
     border: ${borderWidth} solid #333 !important;
     color: #333 !important;
-    text-shadow: 1px 1px 2px rgba(255, 255, 255, 0.5) !important;
-    font-weight: bold !important;
+    text-shadow: 2px 2px 2px rgb(255, 255, 255) !important;
+    
   `;
 
     document.body.appendChild(this.floatingCell);

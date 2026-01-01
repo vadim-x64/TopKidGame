@@ -49,18 +49,18 @@
     display: none;
     position: absolute;
     bottom: 30px;
-    right: 30px;
+    left: 30px;
     width: 70px;
     height: 70px;
     background-color: transparent;
     border: none;
     cursor: pointer;
-    transition: transform 0.2s ease;
+    transition: transform 0.5s ease;
     z-index: 10;
 }
 
 .settings-button:hover {
-    transform: scaleX(1.1);
+    transform: rotate(180deg);
 }
 
 .settings-button img {
