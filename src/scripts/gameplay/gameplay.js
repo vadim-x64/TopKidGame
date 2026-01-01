@@ -95,7 +95,6 @@ class GameplayManager {
     const gameplayTab = document.createElement('button');
     gameplayTab.className = 'gameplay-tab';
     gameplayTab.innerHTML = `
-      <img src="https://cdn-icons-png.flaticon.com/128/3524/3524659.png" alt="..." class="gameplay-tab-icon">
       <span>ГЕЙМПЛЕЙ</span>
     `;
     sidebar.appendChild(gameplayTab);

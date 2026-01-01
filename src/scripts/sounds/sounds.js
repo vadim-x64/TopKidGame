@@ -112,7 +112,6 @@ class SoundManager {
     const soundTab = document.createElement('button');
     soundTab.className = 'sound-tab';
     soundTab.innerHTML = `
-    <img src="https://cdn-icons-png.flaticon.com/128/727/727269.png" alt="..." class="sound-tab-icon">
     <span>ЗВУК</span>
   `;
     sidebar.appendChild(soundTab);
@@ -123,7 +122,7 @@ class SoundManager {
     <h3>Налаштування звуку</h3>
     
     <div class="volume-control">
-      <label class="volume-label">Гучність музики:</label>
+      <label class="volume-label">Гучність музики</label>
       <div class="volume-slider-container">
         <input type="range" min="0" max="100" value="${Math.round(this.volume * 100)}" class="volume-slider" id="volumeSlider">
         <span class="volume-value" id="volumeValue">${Math.round(this.volume * 100)}%</span>
@@ -131,12 +130,11 @@ class SoundManager {
     </div>
     
     <button class="mute-button" id="muteButton">
-      <img src="https://cdn-icons-png.flaticon.com/128/727/727269.png" alt="..." class="mute-icon">
-      <span class="mute-text">Вимкнути музику</span>
+      <span class="mute-text"></span>
     </button>
     
     <div class="volume-control">
-      <label class="volume-label">Гучність звукових ефектів:</label>
+      <label class="volume-label">Гучність звуків</label>
       <div class="volume-slider-container">
         <input type="range" min="0" max="100" value="${Math.round(this.sfxVolume * 100)}" class="volume-slider" id="sfxVolumeSlider">
         <span class="volume-value" id="sfxVolumeValue">${Math.round(this.sfxVolume * 100)}%</span>
@@ -144,8 +142,7 @@ class SoundManager {
     </div>
     
     <button class="mute-button" id="sfxMuteButton">
-      <img src="https://cdn-icons-png.flaticon.com/128/3771/3771928.png" alt="..." class="mute-icon">
-      <span class="mute-text">Вимкнути ефекти</span>
+      <span class="mute-text"></span>
     </button>
   `;
     content.appendChild(soundContent);
@@ -338,30 +335,26 @@ class SoundManager {
     }
 
     const muteText = this.muteButton.querySelector('.mute-text');
-    const muteIcon = this.muteButton.querySelector('.mute-icon');
+
 
     if (this.isMuted || this.volume === 0) {
       this.muteButton.classList.add('muted');
-      muteText.textContent = 'Увімкнути музику';
-      muteIcon.src = 'https://cdn-icons-png.flaticon.com/128/727/727280.png';
+      muteText.textContent = 'ВИМКНЕНО';
     } else {
       this.muteButton.classList.remove('muted');
-      muteText.textContent = 'Вимкнути музику';
-      muteIcon.src = 'https://cdn-icons-png.flaticon.com/128/727/727269.png';
+      muteText.textContent = 'УВІМКНЕНО';
     }
 
     if (this.sfxMuteButton) {
       const sfxMuteText = this.sfxMuteButton.querySelector('.mute-text');
-      const sfxMuteIcon = this.sfxMuteButton.querySelector('.mute-icon');
+
 
       if (this.isSfxMuted || this.sfxVolume === 0) {
         this.sfxMuteButton.classList.add('muted');
-        sfxMuteText.textContent = 'Увімкнути ефекти';
-        sfxMuteIcon.src = 'https://cdn-icons-png.flaticon.com/128/3771/3771957.png';
+        sfxMuteText.textContent = 'ВИМКНЕНО';
       } else {
         this.sfxMuteButton.classList.remove('muted');
-        sfxMuteText.textContent = 'Вимкнути ефекти';
-        sfxMuteIcon.src = 'https://cdn-icons-png.flaticon.com/128/3771/3771928.png';
+        sfxMuteText.textContent = 'УВІМКНЕНО';
       }
     }
   }

@@ -53,7 +53,7 @@ body {
     width: 100px;
     height: 100px;
     border: 10px solid #333;
-    border-top: 10px solid #FFB347;
+    border-top: 10px solid #2192f3;
     border-radius: 50%;
     animation: spin 1s linear infinite;
 }
