@@ -12,6 +12,6 @@ setTimeout(() => {
     backgroundVideo.classList.add('show');
     mainMenu.style.display = 'flex';
     settingsButton.style.display = 'block';
-    backgroundMusic.play().catch(() => {});
+    backgroundMusic.play();
   }, 1000);
 }, 5000);
