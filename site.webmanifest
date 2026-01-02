@@ -1,0 +1,19 @@
+{
+  "name": "Spots",
+  "start_url": "/",
+  "display": "standalone",
+  "icons": [
+    {
+      "src": "src/resources/logotype.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+       "src": "src/resources/logotype.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}
