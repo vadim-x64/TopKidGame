@@ -82,12 +82,9 @@
         object-position: center;
     }
 
-    .game-button:hover {
-        transform: none;
-    }
-
+    .game-button:hover,
     .game-button:focus {
-        transform: scaleX(1.1);
+        transform: none;
     }
 
     .settings-button {
@@ -97,11 +94,8 @@
         right: 20px;
     }
 
-    .settings-button:hover {
-        transform: none;
-    }
-
+    .settings-button:hover,
     .settings-button:focus {
-        transform: scaleX(1.1);
+        transform: none;
     }
 }

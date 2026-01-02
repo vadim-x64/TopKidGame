@@ -51,8 +51,4 @@
     .pause-button:hover {
         transform: none;
     }
-
-    .pause-button:focus {
-        transform: scaleX(1.1);
-    }
 }

@@ -100,4 +100,8 @@
         flex: 1;
         padding: 10px;
     }
+
+    .settings-close:hover {
+        transform: none;
+    }
 }
