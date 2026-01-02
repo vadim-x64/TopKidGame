@@ -12,6 +12,17 @@ setTimeout(() => {
     backgroundVideo.classList.add('show');
     mainMenu.style.display = 'flex';
     settingsButton.style.display = 'block';
-    backgroundMusic.play();
+
+    const playPromise = backgroundMusic.play();
+
+    if (playPromise !== undefined) {
+      playPromise.catch((error) => {
+        const startMusic = () => {
+          backgroundMusic.play();
+          document.removeEventListener('click', startMusic);
+        };
+        document.addEventListener('click', startMusic);
+      });
+    }
   }, 1000);
 }, 5000);
