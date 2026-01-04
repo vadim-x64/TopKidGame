@@ -4,49 +4,59 @@ class FallingAnimation {
     this.animationFrame = null;
     this.isActive = false;
     this.itemCreationInterval = null;
+    this.maxItems = 100; // Обмеження кількості активних елементів
   }
 
-  createFallingItem() {
+  createConfettiItem() {
     const item = document.createElement('img');
-    const itemNumber = Math.floor(Math.random() * 9) + 1;
+    const itemNumber = Math.floor(Math.random() * 10) + 1;
     item.src = `src/resources/items/item${itemNumber}.png`;
     item.className = 'falling-item';
 
-    const size = Math.random() * 70 + 30;
+    // Зменшені розміри іконок
+    const size = Math.random() * 100 + 10;
     item.style.width = size + 'px';
     item.style.height = size + 'px';
 
-    const startX = Math.random() * window.innerWidth;
-    const fallSpeed = Math.random() * 3 + 2;
-    const rotationSpeedX = (Math.random() - 0.5) * 8;
-    const rotationSpeedY = (Math.random() - 0.5) * 8;
-    const rotationSpeedZ = (Math.random() - 0.5) * 6;
-    const horizontalSpeed = (Math.random() - 0.5) * 2;
+    // Випадковий вибір сторони (ліва або права)
+    const fromLeft = Math.random() > 0.5;
+    const startX = fromLeft ? -50 : window.innerWidth + 50;
+
+    // Початкова позиція з нижньої третини екрану
+    const startY = window.innerHeight - (Math.random() * 200 + 100);
+
+    // Швидкість руху вгору
+    const verticalSpeed = Math.random() * 5 + 8;
+
+    // Горизонтальна швидкість до центру екрану
+    const targetX = window.innerWidth / 2 + (Math.random() - 0.5) * 500;
+    const horizontalSpeed = (targetX - startX) / 100;
+
+    // Швидкість обертання навколо себе (вліво або вправо) - ЗМЕНШЕНА
+    const rotationDirection = Math.random() > 0.5 ? 1 : -1; // 1 = вправо, -1 = вліво
+    const rotationSpeedZ = (Math.random() * 2 + 1) * rotationDirection; // 1-3 градусів за кадр (було 3-8)
 
     item.style.position = 'fixed';
     item.style.left = startX + 'px';
-    item.style.top = '-100px';
-    item.style.zIndex = '1003';
+    item.style.top = startY + 'px';
+    item.style.zIndex = '999';
     item.style.pointerEvents = 'none';
-    item.style.transformStyle = 'preserve-3d';
     item.style.opacity = '1';
+    item.style.willChange = 'transform, opacity'; // Оптимізація рендерингу
 
     document.body.appendChild(item);
 
     return {
       element: item,
       x: startX,
-      y: -100,
-      fallSpeed: fallSpeed,
-      rotationX: 0,
-      rotationY: 0,
-      rotationZ: 0,
-      rotationSpeedX: rotationSpeedX,
-      rotationSpeedY: rotationSpeedY,
-      rotationSpeedZ: rotationSpeedZ,
+      y: startY,
+      verticalSpeed: verticalSpeed,
       horizontalSpeed: horizontalSpeed,
+      rotationZ: 0,
+      rotationSpeedZ: rotationSpeedZ,
       opacity: 1,
-      fadeStartY: window.innerHeight - 200
+      fadeStartY: 50,
+      gravity: 0.15,
     };
   }
 
@@ -55,18 +65,22 @@ class FallingAnimation {
 
     this.isActive = true;
 
-    for (let i = 0; i < 15; i++) {
+    // Початковий залп конфетті
+    for (let i = 0; i < 40; i++) {
       setTimeout(() => {
-        if (this.isActive) {
-          this.fallingItems.push(this.createFallingItem());
+        if (this.isActive && this.fallingItems.length < this.maxItems) {
+          this.fallingItems.push(this.createConfettiItem());
         }
-      }, i * 100);
+      }, i * 50);
     }
 
+    // Постійне створення конфетті
     this.itemCreationInterval = setInterval(() => {
-      if (this.isActive) {
-        this.fallingItems.push(this.createFallingItem());
-        this.fallingItems.push(this.createFallingItem());
+      if (this.isActive && this.fallingItems.length < this.maxItems) {
+        const count = Math.min(3, this.maxItems - this.fallingItems.length);
+        for (let i = 0; i < count; i++) {
+          this.fallingItems.push(this.createConfettiItem());
+        }
       }
     }, 200);
 
@@ -74,34 +88,55 @@ class FallingAnimation {
   }
 
   animate() {
-    this.fallingItems.forEach((item, index) => {
-      item.y += item.fallSpeed;
+    // Batch DOM updates для оптимізації
+    const updates = [];
+
+    for (let i = this.fallingItems.length - 1; i >= 0; i--) {
+      const item = this.fallingItems[i];
+
+      // Рух вгору
+      item.y -= item.verticalSpeed;
+
+      // Рух в сторони (до центру)
       item.x += item.horizontalSpeed;
-      item.rotationX += item.rotationSpeedX;
-      item.rotationY += item.rotationSpeedY;
+
+      // Поступове уповільнення (гравітація)
+      item.verticalSpeed -= item.gravity;
+
+      // Обертання навколо себе
       item.rotationZ += item.rotationSpeedZ;
 
-      if (item.y > item.fadeStartY) {
-        const fadeDistance = 200;
-        const distanceIntoFade = item.y - item.fadeStartY;
+      // Зникнення вгорі екрану
+      if (item.y < item.fadeStartY) {
+        const fadeDistance = 50;
+        const distanceIntoFade = item.fadeStartY - item.y;
         const fadeProgress = Math.min(distanceIntoFade / fadeDistance, 1);
         item.opacity = 1 - fadeProgress;
       }
 
-      item.element.style.left = item.x + 'px';
-      item.element.style.top = item.y + 'px';
-      item.element.style.opacity = item.opacity;
-      item.element.style.transform = `
-        rotateX(${item.rotationX}deg) 
-        rotateY(${item.rotationY}deg) 
-        rotateZ(${item.rotationZ}deg)
-        perspective(1000px)
-      `;
-
-      if (item.opacity <= 0 && item.y > window.innerHeight) {
+      // Видалення коли зникло або вилетіло за екран
+      if (item.opacity <= 0 || item.y < -100) {
         item.element.remove();
-        this.fallingItems.splice(index, 1);
+        this.fallingItems.splice(i, 1);
+        continue;
       }
+
+      // Зберігаємо оновлення для batch застосування
+      updates.push({
+        element: item.element,
+        x: item.x,
+        y: item.y,
+        opacity: item.opacity,
+        rotationZ: item.rotationZ,
+      });
+    }
+
+    // Застосовуємо всі оновлення одночасно
+    updates.forEach((update) => {
+      update.element.style.transform = `rotate(${update.rotationZ}deg)`;
+      update.element.style.left = update.x + 'px';
+      update.element.style.top = update.y + 'px';
+      update.element.style.opacity = update.opacity;
     });
 
     if (this.isActive || this.fallingItems.length > 0) {
@@ -125,7 +160,7 @@ class FallingAnimation {
       this.animationFrame = null;
     }
 
-    this.fallingItems.forEach(item => {
+    this.fallingItems.forEach((item) => {
       if (item.element && item.element.parentNode) {
         item.element.remove();
       }
