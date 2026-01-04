@@ -26,7 +26,7 @@ class GameplayManager {
     this.confirmModal.innerHTML = `
       <div class="modal">
         <h3>Змінити режим таймера?</h3>
-        <p>Поточна гра буде перезапущена</p>
+        <p>Поточна гра буде перезапущена.</p>
         <div class="modal-buttons">
           <button class="modal-button cancel" id="timerCancelButton">Скасувати</button>
           <button class="modal-button confirm" id="timerConfirmButton">Так, змінити</button>
