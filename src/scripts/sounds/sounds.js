@@ -231,12 +231,19 @@ class SoundManager {
   }
 
   closeAllPanels() {
-    if (window.gameplayManager && window.gameplayManager.isGameplayPanelOpen()) {
+    if (
+      window.gameplayManager &&
+      window.gameplayManager.isGameplayPanelOpen()
+    ) {
       window.gameplayManager.closeGameplayPanel();
     }
 
     if (window.rulesManager && window.rulesManager.isRulesPanelOpen()) {
       window.rulesManager.closeRulesPanel();
+    }
+
+    if (window.aboutManager && window.aboutManager.isAboutPanelOpen()) {
+      window.aboutManager.closeAboutPanel();
     }
 
     const allContents = document.querySelectorAll('.settings-content > div');

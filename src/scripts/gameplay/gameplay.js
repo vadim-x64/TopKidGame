@@ -336,6 +336,10 @@ class GameplayManager {
       window.rulesManager.closeRulesPanel();
     }
 
+    if (window.aboutManager && window.aboutManager.isAboutPanelOpen()) {
+      window.aboutManager.closeAboutPanel();
+    }
+
     const allContents = document.querySelectorAll('.settings-content > div');
     const allTabs = document.querySelectorAll('.settings-sidebar button');
 
