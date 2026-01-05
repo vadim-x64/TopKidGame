@@ -220,7 +220,7 @@ class GamePanel {
     } else if (this.gridSize === 4) {
       fontSize = window.innerWidth <= 768 ? '36px' : '80px';
     } else { // 5
-      fontSize = window.innerWidth <= 768 ? '28px' : '64px';
+      fontSize = window.innerWidth <= 768 ? '24px' : '64px';
     }
 
     for (let i = 0; i < this.gridSize; i++) {
