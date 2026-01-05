@@ -1,0 +1,69 @@
+.rules-tab {
+    width: 100%;
+    height: 60px;
+    background: linear-gradient(135deg, #2192f3, #2192f3, #78c5fd, #cbe5ff);
+    border: none;
+    border-radius: 50px;
+    color: #EEEEEE;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    margin: 10px;
+    transition: all 0.3s ease;
+    position: relative;
+}
+
+.rules-content {
+    display: none;
+    padding: 30px;
+    overflow-y: auto;
+    max-height: 530px;
+}
+
+.rules-content.active {
+    display: block;
+}
+
+.rules-content h3 {
+    font-size: 36px;
+    color: #EEEEEE;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.rules-text {
+    color: #EEEEEE;
+    font-size: 20px;
+    line-height: 1.6;
+}
+
+.rules-text p {
+    margin-bottom: 15px;
+}
+
+@media screen and (max-width: 768px) {
+    .rules-content {
+        padding: 20px 10px;
+        overflow-y: auto;
+        max-height: calc(100vh - 200px);
+    }
+
+    .rules-tab {
+        width: 100%;
+        margin: auto;
+        padding: 10px;
+        justify-content: center;
+    }
+
+    .rules-content h3 {
+        font-size: 24px;
+    }
+
+    .rules-text {
+        font-size: 16px;
+    }
+}

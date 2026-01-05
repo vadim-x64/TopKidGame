@@ -235,6 +235,10 @@ class SoundManager {
       window.gameplayManager.closeGameplayPanel();
     }
 
+    if (window.rulesManager && window.rulesManager.isRulesPanelOpen()) {
+      window.rulesManager.closeRulesPanel();
+    }
+
     const allContents = document.querySelectorAll('.settings-content > div');
     const allTabs = document.querySelectorAll('.settings-sidebar button');
 
