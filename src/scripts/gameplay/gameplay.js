@@ -2,11 +2,17 @@ class GameplayManager {
   constructor() {
     this.storageKey = 'spots_game_gameplay_settings';
     this.isTimerDisabled = false;
+    this.gridSize = 4;
     this.gameplayTab = null;
     this.gameplayContent = null;
     this.timerCheckbox = null;
     this.isPanelOpen = false;
     this.confirmModal = null;
+    this.confirmButton = null;
+    this.cancelButton = null;
+    this.gridSizeButtons = [];
+    this.pendingGridSize = null;
+    this.pendingTimerChange = null;
     this.loadSettings();
     this.init();
   }
@@ -14,6 +20,7 @@ class GameplayManager {
   init() {
     this.createGameplayPanel();
     this.createConfirmModal();
+    this.bindModalEvents(); // Окремо прив'язуємо події модалки
     this.bindEvents();
     this.bindSettingsCloseEvent();
     this.updateUI();
@@ -22,18 +29,42 @@ class GameplayManager {
   createConfirmModal() {
     this.confirmModal = document.createElement('div');
     this.confirmModal.className = 'modal-overlay';
-    this.confirmModal.id = 'timerChangeModal';
+    this.confirmModal.id = 'gameplayChangeModal';
     this.confirmModal.innerHTML = `
       <div class="modal">
-        <h3>Змінити режим таймера?</h3>
+        <h3>Примінити внесені зміни?</h3>
         <p>Поточна гра буде перезапущена.</p>
         <div class="modal-buttons">
-          <button class="modal-button cancel" id="timerCancelButton">Скасувати</button>
-          <button class="modal-button confirm" id="timerConfirmButton">Так, змінити</button>
+          <button class="modal-button cancel" id="gameplayCancelButton">Скасувати</button>
+          <button class="modal-button confirm" id="gameplayConfirmButton">Так, змінити</button>
         </div>
       </div>
     `;
     document.body.appendChild(this.confirmModal);
+
+    this.confirmButton = document.getElementById('gameplayConfirmButton');
+    this.cancelButton = document.getElementById('gameplayCancelButton');
+  }
+
+  bindModalEvents() {
+    if (this.confirmButton && this.cancelButton) {
+      // Видаляємо старі слухачі, якщо є
+      this.confirmButton.replaceWith(this.confirmButton.cloneNode(true));
+      this.cancelButton.replaceWith(this.cancelButton.cloneNode(true));
+
+      // Оновлюємо посилання після клонування
+      this.confirmButton = document.getElementById('gameplayConfirmButton');
+      this.cancelButton = document.getElementById('gameplayCancelButton');
+
+      // Додаємо нові слухачі
+      this.confirmButton.addEventListener('click', () => {
+        this.confirmChanges();
+      });
+
+      this.cancelButton.addEventListener('click', () => {
+        this.cancelChanges();
+      });
+    }
   }
 
   bindSettingsCloseEvent() {
@@ -51,7 +82,11 @@ class GameplayManager {
       const savedSettings = localStorage.getItem(this.storageKey);
       if (savedSettings) {
         const settings = JSON.parse(savedSettings);
-        this.isTimerDisabled = settings.isTimerDisabled !== undefined ? settings.isTimerDisabled : false;
+        this.isTimerDisabled =
+          settings.isTimerDisabled !== undefined
+            ? settings.isTimerDisabled
+            : false;
+        this.gridSize = settings.gridSize !== undefined ? settings.gridSize : 4;
         console.log('Налаштування геймплею завантажені:', settings);
       }
     } catch (error) {
@@ -64,7 +99,8 @@ class GameplayManager {
     try {
       const settings = {
         isTimerDisabled: this.isTimerDisabled,
-        savedAt: new Date().toISOString()
+        gridSize: this.gridSize,
+        savedAt: new Date().toISOString(),
       };
       localStorage.setItem(this.storageKey, JSON.stringify(settings));
       console.log('Налаштування геймплею збережені:', settings);
@@ -75,12 +111,17 @@ class GameplayManager {
 
   resetToDefaults() {
     this.isTimerDisabled = false;
+    this.gridSize = 4;
     this.saveSettings();
   }
 
   isGameActive() {
     const gamePanel = document.getElementById('gamePanel');
-    return gamePanel && (gamePanel.style.display === 'flex' || gamePanel.classList.contains('show'));
+    return (
+      gamePanel &&
+      (gamePanel.style.display === 'flex' ||
+        gamePanel.classList.contains('show'))
+    );
   }
 
   createGameplayPanel() {
@@ -94,9 +135,7 @@ class GameplayManager {
 
     const gameplayTab = document.createElement('button');
     gameplayTab.className = 'gameplay-tab';
-    gameplayTab.innerHTML = `
-      <span>ГЕЙМПЛЕЙ</span>
-    `;
+    gameplayTab.innerHTML = `<span>ГЕЙМПЛЕЙ</span>`;
     sidebar.appendChild(gameplayTab);
 
     const gameplayContent = document.createElement('div');
@@ -116,46 +155,68 @@ class GameplayManager {
           </label>
         </div>
       </div>
+      
+      <div class="gameplay-option">
+        <label class="option-label">Складність гри</label>
+        <div class="grid-size-selector">
+          <button class="grid-size-button" data-size="3">
+            <span class="grid-label">3×3</span>
+            <span class="grid-description">Легкий</span>
+          </button>
+          <button class="grid-size-button active" data-size="4">
+            <span class="grid-label">4×4</span>
+            <span class="grid-description">Стандартний</span>
+          </button>
+          <button class="grid-size-button" data-size="5">
+            <span class="grid-label">5×5</span>
+            <span class="grid-description">Складний</span>
+          </button>
+        </div>
+      </div>
     `;
+
     content.appendChild(gameplayContent);
 
     this.gameplayTab = gameplayTab;
     this.gameplayContent = gameplayContent;
     this.timerCheckbox = document.getElementById('timerDisabledCheckbox');
     this.timerCustomCheckbox = document.getElementById('timerCustomCheckbox');
-    this.timerCheckboxContainer = document.getElementById('timerCheckboxContainer');
+    this.timerCheckboxContainer = document.getElementById(
+      'timerCheckboxContainer',
+    );
+    this.gridSizeButtons = Array.from(
+      gameplayContent.querySelectorAll('.grid-size-button'),
+    );
   }
 
   bindEvents() {
-    if (!this.gameplayTab || !this.timerCheckbox) return;
+    if (!this.gameplayTab) return;
 
     this.gameplayTab.addEventListener('click', () => {
       this.toggleGameplayPanel();
     });
 
-    this.timerCheckbox.addEventListener('change', () => {
-      this.handleTimerToggle();
-    });
-
-    this.timerCheckboxContainer.addEventListener('click', (e) => {
-      if (e.target !== this.timerCheckbox) {
-        this.timerCheckbox.checked = !this.timerCheckbox.checked;
+    if (this.timerCheckbox) {
+      this.timerCheckbox.addEventListener('change', () => {
         this.handleTimerToggle();
-      }
-    });
-
-    const confirmButton = document.getElementById('timerConfirmButton');
-    const cancelButton = document.getElementById('timerCancelButton');
-
-    if (confirmButton && cancelButton) {
-      confirmButton.addEventListener('click', () => {
-        this.confirmTimerChange();
-      });
-
-      cancelButton.addEventListener('click', () => {
-        this.cancelTimerChange();
       });
     }
+
+    if (this.timerCheckboxContainer) {
+      this.timerCheckboxContainer.addEventListener('click', (e) => {
+        if (e.target !== this.timerCheckbox) {
+          this.timerCheckbox.checked = !this.timerCheckbox.checked;
+          this.handleTimerToggle();
+        }
+      });
+    }
+
+    this.gridSizeButtons.forEach((button) => {
+      button.addEventListener('click', () => {
+        const newSize = parseInt(button.dataset.size);
+        this.handleGridSizeChange(newSize);
+      });
+    });
   }
 
   handleTimerToggle() {
@@ -168,6 +229,23 @@ class GameplayManager {
       return;
     }
 
+    this.pendingTimerChange = newTimerState;
+    this.showConfirmModal();
+  }
+
+  handleGridSizeChange(newSize) {
+    if (newSize === this.gridSize && !this.isGameActive()) {
+      return;
+    }
+
+    if (!this.isGameActive()) {
+      this.gridSize = newSize;
+      this.updateUI();
+      this.saveSettings();
+      return;
+    }
+
+    this.pendingGridSize = newSize;
     this.showConfirmModal();
   }
 
@@ -176,15 +254,34 @@ class GameplayManager {
       window.gameTimer.pauseTimer();
     }
 
-    this.confirmModal.style.display = 'flex';
+    if (this.confirmModal) {
+      this.confirmModal.style.display = 'flex';
+    }
   }
 
-  confirmTimerChange() {
-    const newTimerState = this.timerCheckbox.checked;
-    this.isTimerDisabled = newTimerState;
+  confirmChanges() {
+    console.log('Підтвердження змін');
+
+    if (this.pendingGridSize !== null && this.pendingGridSize !== undefined) {
+      this.gridSize = this.pendingGridSize;
+      this.pendingGridSize = null;
+    }
+
+    if (
+      this.pendingTimerChange !== null &&
+      this.pendingTimerChange !== undefined
+    ) {
+      this.isTimerDisabled = this.pendingTimerChange;
+      this.pendingTimerChange = null;
+    }
+
     this.updateUI();
     this.saveSettings();
-    this.confirmModal.style.display = 'none';
+
+    if (this.confirmModal) {
+      this.confirmModal.style.display = 'none';
+    }
+
     this.closeGameplayPanel();
 
     if (window.settingsModal) {
@@ -194,10 +291,21 @@ class GameplayManager {
     this.restartGame();
   }
 
-  cancelTimerChange() {
-    this.timerCheckbox.checked = this.isTimerDisabled;
+  cancelChanges() {
+    console.log('Скасування змін');
+
+    this.pendingGridSize = null;
+    this.pendingTimerChange = null;
+
+    if (this.timerCheckbox) {
+      this.timerCheckbox.checked = this.isTimerDisabled;
+    }
+
     this.updateUI();
-    this.confirmModal.style.display = 'none';
+
+    if (this.confirmModal) {
+      this.confirmModal.style.display = 'none';
+    }
 
     if (window.gameTimer && window.gameTimer.isTimerPaused()) {
       window.gameTimer.resumeTimer();
@@ -227,16 +335,16 @@ class GameplayManager {
     const allContents = document.querySelectorAll('.settings-content > div');
     const allTabs = document.querySelectorAll('.settings-sidebar button');
 
-    allContents.forEach(content => content.classList.remove('active'));
-    allTabs.forEach(tab => tab.classList.remove('active'));
+    allContents.forEach((content) => content.classList.remove('active'));
+    allTabs.forEach((tab) => tab.classList.remove('active'));
   }
 
   showGameplayPanel() {
     const allContents = document.querySelectorAll('.settings-content > div');
     const allTabs = document.querySelectorAll('.settings-sidebar button');
 
-    allContents.forEach(content => content.classList.remove('active'));
-    allTabs.forEach(tab => tab.classList.remove('active'));
+    allContents.forEach((content) => content.classList.remove('active'));
+    allTabs.forEach((tab) => tab.classList.remove('active'));
 
     this.gameplayContent.classList.add('active');
     this.gameplayTab.classList.add('active');
@@ -265,12 +373,30 @@ class GameplayManager {
     } else {
       this.timerCustomCheckbox.classList.remove('checked');
     }
-
     this.timerCheckbox.checked = this.isTimerDisabled;
+
+    this.gridSizeButtons.forEach((button) => {
+      const buttonSize = parseInt(button.dataset.size);
+      if (buttonSize === this.gridSize) {
+        button.classList.add('active');
+      } else {
+        button.classList.remove('active');
+      }
+    });
+  }
+
+  getGridSize() {
+    return this.gridSize;
   }
 
   getTimerDisabled() {
     return this.isTimerDisabled;
+  }
+
+  setGridSize(size) {
+    this.gridSize = size;
+    this.updateUI();
+    this.saveSettings();
   }
 
   setTimerDisabled(disabled) {
@@ -290,13 +416,19 @@ class GameplayManager {
 
   exportSettings() {
     return {
-      isTimerDisabled: this.isTimerDisabled
+      isTimerDisabled: this.isTimerDisabled,
+      gridSize: this.gridSize,
     };
   }
 
   importSettings(settings) {
     if (settings && typeof settings === 'object') {
-      this.isTimerDisabled = settings.isTimerDisabled !== undefined ? settings.isTimerDisabled : this.isTimerDisabled;
+      this.isTimerDisabled =
+        settings.isTimerDisabled !== undefined
+          ? settings.isTimerDisabled
+          : this.isTimerDisabled;
+      this.gridSize =
+        settings.gridSize !== undefined ? settings.gridSize : this.gridSize;
       this.updateUI();
       this.saveSettings();
     }

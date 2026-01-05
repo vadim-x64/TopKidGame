@@ -64,6 +64,18 @@
     .panel-cell:not(.empty) {
         border: 5px solid #333;
     }
+
+    .panel-cell.blocked::after {
+        font-size: 60px;
+    }
+
+    .panel-cell.empty.drop-target {
+        border: 5px solid #4CAF50 !important;
+    }
+
+    .panel-cell.empty {
+        border: 3px dashed rgba(255, 255, 255, 0.3);
+    }
 }
 
 .panel-cell.drag-shadow,
@@ -128,10 +140,10 @@
     box-shadow: 0 6px 12px rgba(0, 0, 0, 0.25);
 }
 
-.panel-cell:nth-child(16):not(.empty):hover {
-    transform: none !important;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2) !important;
-}
+/*.panel-cell:nth-child(16):not(.empty):hover {*/
+/*    transform: none !important;*/
+/*    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2) !important;*/
+/*}*/
 
 .panel-cell.can-move {
     border-color: #4CAF50 !important;

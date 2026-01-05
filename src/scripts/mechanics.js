@@ -168,7 +168,17 @@ class GameMechanics {
 
     const rect = originalCell.getBoundingClientRect();
     const isMobile = window.innerWidth <= 768;
-    const borderWidth = isMobile ? '5px' : '10px';
+    const gridSize = window.gamePanel ? window.gamePanel.getGridSize() : 4;
+
+    // Адаптивна товщина рамки в залежності від розміру сітки
+    let borderWidth;
+    if (gridSize === 3) {
+      borderWidth = isMobile ? '6px' : '12px';
+    } else if (gridSize === 4) {
+      borderWidth = isMobile ? '5px' : '10px';
+    } else { // 5
+      borderWidth = isMobile ? '4px' : '8px';
+    }
 
     this.floatingCell.style.cssText = `
     position: fixed !important;
@@ -186,7 +196,7 @@ class GameMechanics {
     border: ${borderWidth} solid #333 !important;
     color: #333 !important;
     text-shadow: 2px 2px 2px rgb(255, 255, 255) !important;
-    
+    font-size: ${originalCell.style.fontSize} !important;
   `;
 
     document.body.appendChild(this.floatingCell);
@@ -312,11 +322,12 @@ class GameMechanics {
     if (!window.gamePanel) return false;
 
     const emptyPos = gamePanel.emptyPosition;
+    const gridSize = gamePanel.getGridSize();
 
     return toRow === emptyPos.row &&
       toCol === emptyPos.col &&
-      toRow >= 0 && toRow < 4 &&
-      toCol >= 0 && toCol < 4 &&
+      toRow >= 0 && toRow < gridSize &&
+      toCol >= 0 && toCol < gridSize &&
       this.canMove(fromRow, fromCol);
   }
 
@@ -369,12 +380,14 @@ class GameMechanics {
   checkWin() {
     if (!window.gamePanel) return false;
 
-    for (let i = 0; i < 4; i++) {
-      for (let j = 0; j < 4; j++) {
-        if (i === 3 && j === 3) {
+    const gridSize = gamePanel.getGridSize();
+
+    for (let i = 0; i < gridSize; i++) {
+      for (let j = 0; j < gridSize; j++) {
+        if (i === gridSize - 1 && j === gridSize - 1) {
           if (gamePanel.grid[i][j] !== 0) return false;
         } else {
-          const expectedValue = i * 4 + j + 1;
+          const expectedValue = i * gridSize + j + 1;
           if (gamePanel.grid[i][j] !== expectedValue) return false;
         }
       }

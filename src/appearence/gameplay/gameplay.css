@@ -95,6 +95,81 @@
     width: 0;
 }
 
+.grid-size-selector {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    margin-top: 30px;
+    flex-wrap: nowrap;
+}
+
+.grid-size-button {
+    width: 200px;
+    height: 200px;
+    background: linear-gradient(135deg, rgba(33, 146, 243, 0.3), rgba(120, 197, 253, 0.3));
+    border: 3px solid rgba(203, 229, 255, 0.5);
+    border-radius: 15px;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.grid-size-button::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, rgba(33, 146, 243, 0.2), rgba(120, 197, 253, 0.2));
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.grid-size-button.active {
+    background: linear-gradient(135deg, #2192f3, #78c5fd, #cbe5ff);
+    border-color: #cbe5ff;
+}
+
+.grid-size-button.active::before {
+    opacity: 0;
+}
+
+.grid-label {
+    font-size: 32px;
+    color: #EEEEEE;
+    position: relative;
+    z-index: 1;
+}
+
+.grid-size-button.active .grid-label {
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.grid-description {
+    font-size: 16px;
+    color: #cbe5ff;
+    position: relative;
+    z-index: 1;
+}
+
+.grid-size-button.active .grid-description {
+    color: #333333;
+}
+
+.option-label {
+    display: block;
+    text-align: center;
+    font-size: 24px;
+    color: #EEEEEE;
+}
+
 @media screen and (max-width: 768px) {
     .gameplay-content {
         padding: 30px 0;
@@ -117,5 +192,27 @@
 
     .checkbox-description {
         font-size: 14px;
+    }
+
+    .grid-size-selector {
+        gap: 10px;
+        margin-top: 20px;
+    }
+
+    .grid-size-button {
+        width: 100px;
+        height: 100px;
+    }
+
+    .grid-label {
+        font-size: 24px;
+    }
+
+    .grid-description {
+        font-size: 14px;
+    }
+
+    .option-label {
+        font-size: 18px;
     }
 }

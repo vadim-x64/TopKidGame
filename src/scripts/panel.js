@@ -2,6 +2,7 @@ class GamePanel {
   constructor() {
     this.grid = [];
     this.emptyPosition = { row: 3, col: 3 };
+    this.gridSize = 4;
     this.backgroundMusic = document.getElementById('backgroundMusic');
     this.gameMusic = document.getElementById('gameMusic');
     this.loadingScreen = document.getElementById('loadingScreen');
@@ -11,19 +12,29 @@ class GamePanel {
     this.gameBackgroundVideo = document.getElementById('gameBackgroundVideo');
     this.animationTimeouts = [];
     this.isInitializing = false;
+    this.updateGridSize();
     this.initializeGrid();
     this.bindEvents();
   }
 
+  updateGridSize() {
+    if (window.gameplayManager) {
+      this.gridSize = window.gameplayManager.getGridSize();
+    } else {
+      this.gridSize = 4;
+    }
+    this.emptyPosition = { row: this.gridSize - 1, col: this.gridSize - 1 };
+  }
+
   initializeGrid() {
     this.grid = [];
-    for (let i = 0; i < 4; i++) {
+    for (let i = 0; i < this.gridSize; i++) {
       this.grid[i] = [];
-      for (let j = 0; j < 4; j++) {
-        if (i === 3 && j === 3) {
+      for (let j = 0; j < this.gridSize; j++) {
+        if (i === this.gridSize - 1 && j === this.gridSize - 1) {
           this.grid[i][j] = 0;
         } else {
-          this.grid[i][j] = i * 4 + j + 1;
+          this.grid[i][j] = i * this.gridSize + j + 1;
         }
       }
     }
@@ -31,19 +42,22 @@ class GamePanel {
 
   shuffleGrid() {
     const numbers = [];
-    for (let i = 1; i <= 15; i++) {
+    const totalCells = this.gridSize * this.gridSize;
+
+    for (let i = 1; i < totalCells; i++) {
       numbers.push(i);
     }
 
+    // Перемішування масиву
     for (let i = numbers.length - 1; i > 0; i--) {
       const j = Math.floor(Math.random() * (i + 1));
       [numbers[i], numbers[j]] = [numbers[j], numbers[i]];
     }
 
     let index = 0;
-    for (let i = 0; i < 4; i++) {
-      for (let j = 0; j < 4; j++) {
-        if (i === 3 && j === 3) {
+    for (let i = 0; i < this.gridSize; i++) {
+      for (let j = 0; j < this.gridSize; j++) {
+        if (i === this.gridSize - 1 && j === this.gridSize - 1) {
           this.grid[i][j] = 0;
           this.emptyPosition = { row: i, col: j };
         } else {
@@ -66,6 +80,7 @@ class GamePanel {
       this.clearAnimationTimeouts();
 
       const panelGrid = document.getElementById('panelGrid');
+      panelGrid.setAttribute('data-grid-size', this.gridSize);
       const cells = panelGrid.querySelectorAll('.panel-cell:not(.animate-in)');
 
       this.pendingCells = Array.from(cells).map(cell => ({
@@ -150,6 +165,8 @@ class GamePanel {
       gameSettingsButton.style.pointerEvents = '';
     }
 
+    this.updateGridSize();
+    this.initializeGrid();
     this.shuffleGrid();
     this.renderPanel();
   }
@@ -192,13 +209,28 @@ class GamePanel {
     const panelGrid = document.getElementById('panelGrid');
     panelGrid.innerHTML = '';
 
-    for (let i = 0; i < 4; i++) {
-      for (let j = 0; j < 4; j++) {
+    // Оновити CSS Grid для нового розміру
+    panelGrid.style.gridTemplateColumns = `repeat(${this.gridSize}, 1fr)`;
+    panelGrid.style.gridTemplateRows = `repeat(${this.gridSize}, 1fr)`;
+
+    // Визначити розмір шрифту в залежності від розміру сітки
+    let fontSize;
+    if (this.gridSize === 3) {
+      fontSize = window.innerWidth <= 768 ? '48px' : '100px';
+    } else if (this.gridSize === 4) {
+      fontSize = window.innerWidth <= 768 ? '36px' : '80px';
+    } else { // 5
+      fontSize = window.innerWidth <= 768 ? '28px' : '64px';
+    }
+
+    for (let i = 0; i < this.gridSize; i++) {
+      for (let j = 0; j < this.gridSize; j++) {
         const cell = document.createElement('div');
         cell.className = 'panel-cell';
         cell.setAttribute('data-row', i);
         cell.setAttribute('data-col', j);
         cell.style.opacity = '0';
+        cell.style.fontSize = fontSize;
 
         if (this.grid[i][j] === 0) {
           cell.classList.add('empty');
@@ -209,7 +241,7 @@ class GamePanel {
 
         panelGrid.appendChild(cell);
 
-        const delay = (i * 4 + j) * 100;
+        const delay = (i * this.gridSize + j) * 100;
         const timeoutId = setTimeout(() => {
           if (!window.gamePause || !window.gamePause.getIsPaused()) {
             cell.classList.add('animate-in');
@@ -219,12 +251,13 @@ class GamePanel {
       }
     }
 
+    const totalCells = this.gridSize * this.gridSize;
     const finalTimeoutId = setTimeout(() => {
       if (window.gameMechanics && (!window.gamePause || !window.gamePause.getIsPaused())) {
         window.gameMechanics.initializeMechanics();
       }
       this.isInitializing = false;
-    }, 2000);
+    }, totalCells * 100 + 500);
     this.animationTimeouts.push(finalTimeoutId);
   }
 
@@ -252,6 +285,8 @@ class GamePanel {
           gamePanel.style.display = 'flex';
           this.loadingScreen.style.display = 'none';
 
+          this.updateGridSize();
+          this.initializeGrid();
           this.shuffleGrid();
           this.renderPanel();
           this.showGameButtons();
@@ -352,6 +387,7 @@ class GamePanel {
     }, 2000);
   }
 
+
   bindEvents() {
     document.addEventListener('DOMContentLoaded', () => {
       const newGameButton = document.getElementById('newGameButton');
@@ -368,6 +404,10 @@ class GamePanel {
         this.showPanel();
       });
     }
+  }
+
+  getGridSize() {
+    return this.gridSize;
   }
 }
 
