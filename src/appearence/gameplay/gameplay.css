@@ -32,9 +32,7 @@
     text-align: center;
 }
 
-.gameplay-option {
-    margin-bottom: 30px;
-}
+
 
 .checkbox-container {
     display: flex;
@@ -45,7 +43,7 @@
     border-radius: 10px;
     border: 3px solid rgba(203, 229, 255, 0.5);
     cursor: pointer;
-    margin-top: 30px;
+    margin: 30px auto;
 }
 
 .custom-checkbox {
@@ -104,8 +102,8 @@
 }
 
 .grid-size-button {
-    width: 200px;
-    height: 200px;
+    flex: 1;
+    aspect-ratio: 1;
     background: linear-gradient(135deg, rgba(33, 146, 243, 0.3), rgba(120, 197, 253, 0.3));
     border: 3px solid rgba(203, 229, 255, 0.5);
     border-radius: 15px;
@@ -198,11 +196,6 @@
     .grid-size-selector {
         gap: 10px;
         margin-top: 20px;
-    }
-
-    .grid-size-button {
-        width: 100px;
-        height: 100px;
     }
 
     .grid-label {

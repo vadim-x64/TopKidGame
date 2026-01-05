@@ -38,7 +38,6 @@
 .rules-text {
     color: #EEEEEE;
     font-size: 20px;
-    line-height: 1.6;
 }
 
 .rules-text p {
@@ -47,9 +46,8 @@
 
 @media screen and (max-width: 768px) {
     .rules-content {
-        padding: 20px 10px;
+        padding: 30px 0;
         overflow-y: auto;
-        max-height: calc(100vh - 200px);
     }
 
     .rules-tab {
@@ -64,6 +62,6 @@
     }
 
     .rules-text {
-        font-size: 16px;
+        font-size: 18px;
     }
 }
