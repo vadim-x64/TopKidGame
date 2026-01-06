@@ -150,7 +150,7 @@ class GameplayManager {
           <label class="checkbox-label" for="timerDisabledCheckbox">
             Гра не на час
             <div class="checkbox-description">
-              Відключити 5-хвилинний таймер та грати без обмежень часу
+              Відключити 5-хвилинний таймер та грати без обмежень часу.
             </div>
           </label>
         </div>
@@ -161,15 +161,15 @@ class GameplayManager {
         <div class="grid-size-selector">
           <button class="grid-size-button" data-size="3">
             <span class="grid-label">3×3</span>
-            <span class="grid-description">Легкий</span>
+            <span class="grid-description">Просто</span>
           </button>
           <button class="grid-size-button active" data-size="4">
             <span class="grid-label">4×4</span>
-            <span class="grid-description">Стандартний</span>
+            <span class="grid-description">Стандарт</span>
           </button>
           <button class="grid-size-button" data-size="5">
             <span class="grid-label">5×5</span>
-            <span class="grid-description">Складний</span>
+            <span class="grid-description">Складно</span>
           </button>
         </div>
       </div>
