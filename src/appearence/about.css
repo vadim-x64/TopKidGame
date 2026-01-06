@@ -61,7 +61,7 @@
 }
 
 .about-footer {
-    background: linear-gradient(135deg, rgba(33, 146, 243, 0.35), rgba(33, 146, 243, 0.35), rgba(120, 197, 253, 0.35), rgba(203, 229, 255, 0.35));
+    background: linear-gradient(135deg, rgba(33, 146, 243, 0.2), rgba(120, 197, 253, 0.2));
     text-align: center;
     padding: 10px;
     border-radius: 10px;

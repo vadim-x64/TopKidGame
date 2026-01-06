@@ -39,7 +39,7 @@
     align-items: center;
     gap: 20px;
     padding: 20px;
-    background: linear-gradient(135deg, rgba(33, 146, 243, 0.5), rgba(33, 146, 243, 0.5), rgba(120, 197, 253, 0.5), rgba(203, 229, 255, 0.5));
+    background: linear-gradient(135deg, rgba(33, 146, 243, 0.3), rgba(120, 197, 253, 0.3));
     border-radius: 10px;
     border: 3px solid rgba(203, 229, 255, 0.5);
     cursor: pointer;
@@ -66,10 +66,10 @@
 
 .custom-checkbox.checked::after {
     content: '';
-    width: 10px;
-    height: 20px;
+    width: 8px;
+    height: 18px;
     border: solid #cbe5ff;
-    border-width: 0 4px 3px 0;
+    border-width: 0 4px 4px 0;
     transform: rotate(40deg);
 }
 
@@ -82,7 +82,7 @@
 
 .checkbox-description {
     font-size: 18px;
-    color: #333333;
+    color: #CCCCCC;
 }
 
 .hidden-checkbox {
@@ -140,7 +140,7 @@
 }
 
 .grid-label {
-    font-size: 32px;
+    font-size: 36px;
     color: #EEEEEE;
     position: relative;
     z-index: 1;
@@ -151,8 +151,8 @@
 }
 
 .grid-description {
-    font-size: 16px;
-    color: #cbe5ff;
+    font-size: 18px;
+    color: #CCCCCC  ;
     position: relative;
     z-index: 1;
 }

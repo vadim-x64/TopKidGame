@@ -32,16 +32,25 @@
     font-size: 36px;
     color: #EEEEEE;
     text-align: center;
-    margin-bottom: 20px;
 }
 
 .rules-text {
+    display: block;
+    margin: 30px auto;
     color: #EEEEEE;
-    font-size: 20px;
+}
+
+.rules-text .chapter {
+    font-size: 24px;
+    color: #cbe5ff;
 }
 
 .rules-text p {
-    margin-bottom: 15px;
+    font-size: 18px;
+}
+
+.rule-section {
+    margin: 30px auto;
 }
 
 @media screen and (max-width: 768px) {
