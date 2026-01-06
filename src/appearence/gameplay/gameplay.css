@@ -20,6 +20,8 @@
 .gameplay-content {
     display: none;
     padding: 30px;
+    overflow-y: auto;
+    height: 100%;
 }
 
 .gameplay-content.active {
@@ -31,8 +33,6 @@
     color: #EEEEEE;
     text-align: center;
 }
-
-
 
 .checkbox-container {
     display: flex;
@@ -171,7 +171,7 @@
 @media screen and (max-width: 768px) {
     .gameplay-content {
         padding: 30px 0;
-        overflow-y: auto;
+        overflow: hidden;
     }
 
     .gameplay-tab {

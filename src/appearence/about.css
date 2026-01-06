@@ -20,6 +20,8 @@
 .about-content {
     display: none;
     padding: 30px;
+    overflow-y: scroll;
+    height: 100%;
 }
 
 .about-content.active {
@@ -32,56 +34,49 @@
     text-align: center;
 }
 
-.about-section h4 {
-    color: #cbe5ff;
-    font-size: 20px;
-    margin-bottom: 10px;
-}
-
 .about-text {
     display: block;
-    margin-top: 30px;
+    margin: 30px auto;
     font-size: 24px;
     color: #EEEEEE;
+    text-align: justify;
 }
 
-.about-text p {
-    margin-top: 10px;
+.about-section {
+    margin: 30px auto;
+}
+
+.about-section h4 {
+    color: #cbe5ff;
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.about-section p, ul li {
+    font-size: 18px;
 }
 
 .about-section ul {
     list-style: none;
-    padding-left: 0;
-    margin: 10px 0;
-}
-
-.about-section ul li {
-    position: relative;
-    color: #EEEEEE;
-}
-
-.about-section strong {
-    color: #EEEEEE;
-    font-weight: bold;
 }
 
 .about-footer {
-    background: linear-gradient(135deg, rgba(33, 146, 243, 0.2), rgba(33, 146, 243, 0.1));
+    background: linear-gradient(135deg, rgba(33, 146, 243, 0.35), rgba(33, 146, 243, 0.35), rgba(120, 197, 253, 0.35), rgba(203, 229, 255, 0.35));
     text-align: center;
-    margin-top: 30px;
-    padding: 20px;
-    border-radius: 15px;
+    padding: 10px;
+    border-radius: 10px;
+    margin: auto;
 }
 
 .about-footer p {
-    margin: 10px 0;
+    margin: 10px auto;
     font-size: 24px;
-    color: #EEEEEE;
 }
 
 @media screen and (max-width: 768px) {
     .about-content {
         padding: 30px 0;
+        overflow: hidden;
     }
 
     .about-tab {

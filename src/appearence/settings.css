@@ -26,8 +26,7 @@
     background-position: center;
     background-repeat: no-repeat;
     border-radius: 10px;
-    overflow-x: hidden;
-    overflow-y: scroll;
+    overflow: hidden;
     position: relative;
     display: flex;
     transform: scale(0.8);
@@ -83,6 +82,7 @@
         height: 100%;
         flex-direction: column;
         border-radius: 0;
+        overflow-y: scroll;
     }
 
     .settings-sidebar {
