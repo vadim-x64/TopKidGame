@@ -14,4 +14,4 @@ setTimeout(() => {
     settingsButton.style.display = 'block';
     backgroundMusic.play();
   }, 1000);
-}, 5000);
+}, 0);

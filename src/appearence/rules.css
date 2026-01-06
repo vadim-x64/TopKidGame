@@ -20,8 +20,6 @@
 .rules-content {
     display: none;
     padding: 30px;
-    overflow-y: auto;
-    max-height: 530px;
 }
 
 .rules-content.active {
@@ -47,7 +45,6 @@
 @media screen and (max-width: 768px) {
     .rules-content {
         padding: 30px 0;
-        overflow-y: auto;
     }
 
     .rules-tab {
